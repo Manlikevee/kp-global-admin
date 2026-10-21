@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Giving & Offerings · KP Global Admin</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="assets/style.css" />
+    <script>
+      try {
+        var t = localStorage.getItem("kp-theme");
+        if (t) document.documentElement.setAttribute("data-theme", t);
+      } catch (e) {}
+    </script>
+  </head>
+  <body data-page="giving">
+    <div class="app" id="app">
+      <aside class="side" id="side"></aside>
+      <div class="scrim" id="scrim"></div>
+      <main class="main">
+        <div class="top">
+          <button class="ib ham" id="ham" aria-label="Open menu"></button>
+          <div class="crumb">KP Global / <b>Giving & Offerings</b></div>
+          <div class="tools">
+            <button class="ib" aria-label="Notifications">
+              <span data-i="notify"></span><span class="dot"></span></button
+            ><button class="ib" id="theme"></button>
+          </div>
+        </div>
+        <div class="stage">
+          <h1>Giving & Offerings</h1>
+          <div class="sub">Offerings, tithes and donations</div>
+          <div class="stats s3">
+            <div class="card st">
+              <div class="h">
+                <span class="chip" data-i="giving"></span>This month
+              </div>
+              <div class="n">12,400</div>
+              <div class="d">+8% vs last month</div>
+            </div>
+            <div class="card st">
+              <div class="h">
+                <span class="chip" data-i="giving"></span>Transactions
+              </div>
+              <div class="n">318</div>
+              <div class="d">Completed</div>
+            </div>
+            <div class="card st">
+              <div class="h">
+                <span class="chip" data-i="giving"></span>Giving categories
+              </div>
+              <div class="n">5</div>
+              <div class="d">Active</div>
+            </div>
+          </div>
+          <div class="card" style="margin-top: 14px">
+            <div class="bar">
+              <h2>All giving & offerings</h2>
+              <input
+                class="q"
+                placeholder="Filter…"
+                aria-label="Filter"
+              /><button class="btn p">Add category</button>
+            </div>
+            <div class="scroll">
+              <table class="tbl">
+                <thead>
+                  <tr>
+                    <th>Category</th>
+                    <th>Period</th>
+                    <th>Amount</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Tithes</td>
+                    <td>Oct 2026</td>
+                    <td>7,150</td>
+                    <td><span class="tag ok">Active</span></td>
+                  </tr>
+                  <tr>
+                    <td>Building fund</td>
+                    <td>Oct 2026</td>
+                    <td>3,020</td>
+                    <td><span class="tag ok">Active</span></td>
+                  </tr>
+                  <tr>
+                    <td>Missions</td>
+                    <td>Oct 2026</td>
+                    <td>2,230</td>
+                    <td><span class="tag w">Draft</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+    <script src="assets/app.js"></script>
+  </body>
+</html>

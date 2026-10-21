@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Members · KP Global Admin</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="assets/style.css" />
+    <script>
+      try {
+        var t = localStorage.getItem("kp-theme");
+        if (t) document.documentElement.setAttribute("data-theme", t);
+      } catch (e) {}
+    </script>
+  </head>
+  <body data-page="members">
+    <div class="app" id="app">
+      <aside class="side" id="side"></aside>
+      <div class="scrim" id="scrim"></div>
+      <main class="main">
+        <div class="top">
+          <button class="ib ham" id="ham" aria-label="Open menu"></button>
+          <div class="crumb">KP Global / <b>Members</b></div>
+          <div class="tools">
+            <button class="ib" aria-label="Notifications">
+              <span data-i="notify"></span><span class="dot"></span></button
+            ><button class="ib" id="theme"></button>
+          </div>
+        </div>
+        <div class="stage">
+          <h1>Members</h1>
+          <div class="sub">Everyone registered in the KP Global app</div>
+          <div class="stats s3">
+            <div class="card st">
+              <div class="h">
+                <span class="chip" data-i="members"></span>Total members
+              </div>
+              <div class="n">1,248</div>
+              <div class="d">+36 this month</div>
+            </div>
+            <div class="card st">
+              <div class="h">
+                <span class="chip" data-i="members"></span>Pending verification
+              </div>
+              <div class="n">18</div>
+              <div class="d">Review new sign-ups</div>
+            </div>
+            <div class="card st">
+              <div class="h">
+                <span class="chip" data-i="members"></span>Active this week
+              </div>
+              <div class="n">734</div>
+              <div class="d">59% of members</div>
+            </div>
+          </div>
+          <div class="card" style="margin-top: 14px">
+            <div class="bar">
+              <h2>All members</h2>
+              <input
+                class="q"
+                placeholder="Filter…"
+                aria-label="Filter"
+              /><button class="btn p">Add member</button>
+            </div>
+            <div class="scroll">
+              <table class="tbl">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Role</th>
+                    <th>Joined</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Grace Adeyemi</td>
+                    <td>Member</td>
+                    <td>12 Oct 2026</td>
+                    <td><span class="tag ok">Active</span></td>
+                  </tr>
+                  <tr>
+                    <td>Daniel Okafor</td>
+                    <td>Usher</td>
+                    <td>08 Oct 2026</td>
+                    <td><span class="tag ok">Active</span></td>
+                  </tr>
+                  <tr>
+                    <td>Esther Mensah</td>
+                    <td>Member</td>
+                    <td>20 Oct 2026</td>
+                    <td><span class="tag w">Pending</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+    <script src="assets/app.js"></script>
+  </body>
+</html>
