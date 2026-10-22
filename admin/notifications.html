@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Notifications · KP Global Admin</title>
+<link rel="icon" href="assets/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+<script>try{var t=localStorage.getItem('kp-theme');if(t)document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+</head><body data-page="notifications"><div class="app" id="app"><aside class="side" id="side"></aside><div class="scrim" id="scrim"></div>
+<main class="main"><div class="top"><button class="ib ham" id="ham" aria-label="Open menu"></button><div class="crumb"><a href="dashboard.html">KP Global</a> / <b>Notifications</b></div>
+<div class="tools"><a class="ib" href="../index.html" aria-label="View website" title="View website"><span data-i="globe"></span></a><a class="ib" href="notifications.html" aria-label="Notifications"><span data-i="notify"></span><span class="dot"></span></a><button class="ib" id="theme"></button></div></div>
+<div class="stage"><div class="ph"><div><h1>Notifications</h1><div class="sub">Send push notifications to app users</div></div><div class="acts"></div></div>
+<div class="two"><div class="card"><h2>New notification</h2><p class="s">Members receive it on their phones.</p>
+<form class="f wide" data-saved="Notification sent" data-next="notifications.html" data-edit-title="Notification">
+<label>Title<input id="nt" maxlength="50" placeholder="Sunday service reminder" required></label>
+<label>Message<textarea id="nm" rows="3" maxlength="140" placeholder="Doors open at 8:30 AM. See you there!" required></textarea><small id="cnt">0/140</small></label>
+<div class="cols"><label>Send to<select><option>All members</option><option>Study group</option><option>Youth</option><option>Choir</option><option>Ushers</option></select></label>
+<label>When<span style="display:flex;gap:14px;padding-top:9px;font-weight:500"><label class="c"><input type="radio" name="when" value="now" checked> Now</label><label class="c"><input type="radio" name="when" value="later"> Schedule</label></span></label></div>
+<label id="sched" hidden>Send at<input type="datetime-local"></label>
+<button class="btn p" type="submit" style="justify-self:start">Send notification</button></form></div>
+<div style="display:grid;gap:14px"><div class="card"><h2>Preview</h2><p class="s">How it looks on a phone</p><div class="phone"><img src="assets/logo.png" alt=""><div><b id="pt"></b><span id="pm"></span></div></div></div>
+<div class="card"><h2>History</h2><div class="row"><div class="t"><b>Sunday service reminder</b><span>All members, today 07:00</span></div><span class="tag ok">Sent</span></div><div class="row"><div class="t"><b>Bible study tonight</b><span>Study group, yesterday</span></div><span class="tag ok">Sent</span></div><div class="row"><div class="t"><b>Giving appeal</b><span>All members, tomorrow 09:00</span></div><span class="tag w">Scheduled</span></div></div></div></div></div></main></div><script src="assets/app.js"></script></body></html>
