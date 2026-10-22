@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Create event · KP Global Admin</title>
+<link rel="icon" href="assets/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+<script>try{var t=localStorage.getItem('kp-theme');if(t)document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+</head><body data-page="events"><div class="app" id="app"><aside class="side" id="side"></aside><div class="scrim" id="scrim"></div>
+<main class="main"><div class="top"><button class="ib ham" id="ham" aria-label="Open menu"></button><div class="crumb"><a href="dashboard.html">KP Global</a> / <a href="events.html">Events &amp; Services</a> / <b>Create event</b></div>
+<div class="tools"><a class="ib" href="notifications.html" aria-label="Notifications"><span data-i="notify"></span><span class="dot"></span></a><button class="ib" id="theme"></button></div></div>
+<div class="stage"><a class="back" href="events.html"><span data-i="back"></span>Events & Services</a>
+<div class="ph"><div><h1 data-te="Edit event">Create event</h1><div class="sub" data-te="Update the details below, then save your changes.">Fill in the details below. You can edit this later.</div></div></div>
+<form class="fgrid" data-saved="Event saved" data-edit-title="Edit event" data-next="events.html">
+<div class="card"><div class="f wide"><label>Event title<input name="title" type="text" placeholder="e.g. Youth Fellowship Night" data-edit="Sunday Worship Service" required></label><div class="cols"><label>Date<input name="date" type="date" placeholder="" data-edit="2026-10-25" required></label><label>Start time<input name="time" type="time" placeholder="" data-edit="09:00"></label></div><label>Location<input name="loc" type="text" placeholder="Where is it?" data-edit="Main auditorium"></label><label>Description<textarea name="desc" rows="4" placeholder="What should members know?" data-edit="Our weekly gathering for worship, the Word and fellowship."></textarea></label><div class="cols"><label>Capacity<input name="cap" type="number" placeholder="No limit" data-edit="600"></label><label>Repeats<select name="rep" data-edit="Every week"><option selected>Does not repeat</option><option>Every week</option><option>Every month</option></select></label></div></div></div>
+<div class="side-c"><div class="card"><div class="f wide"><label>Status<select name="status" data-edit="Confirmed"><option selected>Draft</option><option>Confirmed</option></select></label><label class="c"><input type="checkbox" name="reg" data-edit="1" checked> Members can register in the app</label><label class="c"><input type="checkbox" name="rem" data-edit="1" checked> Send a reminder 24 hours before</label>
+<button class="btn p big" type="submit" data-te="Save changes">Create event</button>
+<a class="btn big" href="events.html" style="justify-content:center">Cancel</a>
+<a class="btn d big only-edit" href="#" style="justify-content:center" data-confirm="Delete this event?" data-msg="It will be removed from the app straight away." data-done="Event deleted" data-go="events.html"><span data-i="trash"></span> Delete event</a></div></div></div>
+</form></div></main></div><script src="assets/app.js"></script></body></html>

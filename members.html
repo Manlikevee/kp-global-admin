@@ -1,108 +1,14 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Members · KP Global Admin</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="assets/style.css" />
-    <script>
-      try {
-        var t = localStorage.getItem("kp-theme");
-        if (t) document.documentElement.setAttribute("data-theme", t);
-      } catch (e) {}
-    </script>
-  </head>
-  <body data-page="members">
-    <div class="app" id="app">
-      <aside class="side" id="side"></aside>
-      <div class="scrim" id="scrim"></div>
-      <main class="main">
-        <div class="top">
-          <button class="ib ham" id="ham" aria-label="Open menu"></button>
-          <div class="crumb">KP Global / <b>Members</b></div>
-          <div class="tools">
-            <button class="ib" aria-label="Notifications">
-              <span data-i="notify"></span><span class="dot"></span></button
-            ><button class="ib" id="theme"></button>
-          </div>
-        </div>
-        <div class="stage">
-          <h1>Members</h1>
-          <div class="sub">Everyone registered in the KP Global app</div>
-          <div class="stats s3">
-            <div class="card st">
-              <div class="h">
-                <span class="chip" data-i="members"></span>Total members
-              </div>
-              <div class="n">1,248</div>
-              <div class="d">+36 this month</div>
-            </div>
-            <div class="card st">
-              <div class="h">
-                <span class="chip" data-i="members"></span>Pending verification
-              </div>
-              <div class="n">18</div>
-              <div class="d">Review new sign-ups</div>
-            </div>
-            <div class="card st">
-              <div class="h">
-                <span class="chip" data-i="members"></span>Active this week
-              </div>
-              <div class="n">734</div>
-              <div class="d">59% of members</div>
-            </div>
-          </div>
-          <div class="card" style="margin-top: 14px">
-            <div class="bar">
-              <h2>All members</h2>
-              <input
-                class="q"
-                placeholder="Filter…"
-                aria-label="Filter"
-              /><button class="btn p">Add member</button>
-            </div>
-            <div class="scroll">
-              <table class="tbl">
-                <thead>
-                  <tr>
-                    <th>Name</th>
-                    <th>Role</th>
-                    <th>Joined</th>
-                    <th>Status</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>Grace Adeyemi</td>
-                    <td>Member</td>
-                    <td>12 Oct 2026</td>
-                    <td><span class="tag ok">Active</span></td>
-                  </tr>
-                  <tr>
-                    <td>Daniel Okafor</td>
-                    <td>Usher</td>
-                    <td>08 Oct 2026</td>
-                    <td><span class="tag ok">Active</span></td>
-                  </tr>
-                  <tr>
-                    <td>Esther Mensah</td>
-                    <td>Member</td>
-                    <td>20 Oct 2026</td>
-                    <td><span class="tag w">Pending</span></td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </main>
-    </div>
-    <script src="assets/app.js"></script>
-  </body>
-</html>
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Members · KP Global Admin</title>
+<link rel="icon" href="assets/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+<script>try{var t=localStorage.getItem('kp-theme');if(t)document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+</head><body data-page="members"><div class="app" id="app"><aside class="side" id="side"></aside><div class="scrim" id="scrim"></div>
+<main class="main"><div class="top"><button class="ib ham" id="ham" aria-label="Open menu"></button><div class="crumb"><a href="dashboard.html">KP Global</a> / <b>Members</b></div>
+<div class="tools"><a class="ib" href="notifications.html" aria-label="Notifications"><span data-i="notify"></span><span class="dot"></span></a><button class="ib" id="theme"></button></div></div>
+<div class="stage"><div class="ph"><div><h1>Members</h1><div class="sub">Everyone registered in the KP Global app</div></div><div class="acts"><a class="btn p" href="member-form.html"><span data-i="plus"></span>Add member</a></div></div>
+<div class="toolbar"><div class="seg" data-target="#mt" role="group"><button class="on" data-f="all">All <i>1,248</i></button><button class="" data-f="active">Active <i>1,196</i></button><button class="" data-f="pending">Pending <i>18</i></button><button class="" data-f="inactive">Inactive <i>34</i></button></div><input class="q" placeholder="Search members…" aria-label="Search members"></div>
+<div class="card" id="mt" data-scope><div class="scroll"><table class="tbl"><thead><tr><th>Name</th><th>Role</th><th>Joined</th><th>Status</th><th class="end">Actions</th></tr></thead><tbody><tr data-s="active"><td><div class="who"><div class="av  c0">GA</div><div><a class="lnk" href="member-detail.html">Grace Adeyemi</a><small>grace.adeyemi@example.org</small></div></div></td><td>Member</td><td>12 Oct 2026</td><td><span class="tag ok">Active</span></td><td class="end"><a class="ib sm" href="member-detail.html" aria-label="View" title="View"><span data-i="eye"></span></a><a class="ib sm" href="member-form.html?edit=1" aria-label="Edit" title="Edit"><span data-i="edit"></span></a></td></tr><tr data-s="active"><td><div class="who"><div class="av  c1">DO</div><div><a class="lnk" href="member-detail.html">Daniel Okafor</a><small>daniel.okafor@example.org</small></div></div></td><td>Usher</td><td>08 Oct 2026</td><td><span class="tag ok">Active</span></td><td class="end"><a class="ib sm" href="member-detail.html" aria-label="View" title="View"><span data-i="eye"></span></a><a class="ib sm" href="member-form.html?edit=1" aria-label="Edit" title="Edit"><span data-i="edit"></span></a></td></tr><tr data-s="pending"><td><div class="who"><div class="av  c2">EM</div><div><a class="lnk" href="member-detail.html">Esther Mensah</a><small>esther.mensah@example.org</small></div></div></td><td>Member</td><td>20 Oct 2026</td><td><span class="tag w">Pending</span></td><td class="end"><a class="ib sm" href="member-detail.html" aria-label="View" title="View"><span data-i="eye"></span></a><a class="ib sm" href="member-form.html?edit=1" aria-label="Edit" title="Edit"><span data-i="edit"></span></a></td></tr><tr data-s="active"><td><div class="who"><div class="av  c3">SB</div><div><a class="lnk" href="member-detail.html">Samuel Boateng</a><small>samuel.boateng@example.org</small></div></div></td><td>Youth leader</td><td>02 Sep 2026</td><td><span class="tag ok">Active</span></td><td class="end"><a class="ib sm" href="member-detail.html" aria-label="View" title="View"><span data-i="eye"></span></a><a class="ib sm" href="member-form.html?edit=1" aria-label="Edit" title="Edit"><span data-i="edit"></span></a></td></tr><tr data-s="active"><td><div class="who"><div class="av  c0">RB</div><div><a class="lnk" href="member-detail.html">Ruth Bello</a><small>ruth.bello@example.org</small></div></div></td><td>Choir leader</td><td>14 Aug 2026</td><td><span class="tag ok">Active</span></td><td class="end"><a class="ib sm" href="member-detail.html" aria-label="View" title="View"><span data-i="eye"></span></a><a class="ib sm" href="member-form.html?edit=1" aria-label="Edit" title="Edit"><span data-i="edit"></span></a></td></tr><tr data-s="pending"><td><div class="who"><div class="av  c1">TK</div><div><a class="lnk" href="member-detail.html">Tunde Kareem</a><small>tunde.kareem@example.org</small></div></div></td><td>Member</td><td>18 Oct 2026</td><td><span class="tag w">Pending</span></td><td class="end"><a class="ib sm" href="member-detail.html" aria-label="View" title="View"><span data-i="eye"></span></a><a class="ib sm" href="member-form.html?edit=1" aria-label="Edit" title="Edit"><span data-i="edit"></span></a></td></tr><tr data-s="inactive"><td><div class="who"><div class="av  c2">NE</div><div><a class="lnk" href="member-detail.html">Naomi Eze</a><small>naomi.eze@example.org</small></div></div></td><td>Children’s teacher</td><td>30 Jul 2026</td><td><span class="tag bad">Inactive</span></td><td class="end"><a class="ib sm" href="member-detail.html" aria-label="View" title="View"><span data-i="eye"></span></a><a class="ib sm" href="member-form.html?edit=1" aria-label="Edit" title="Edit"><span data-i="edit"></span></a></td></tr></tbody></table></div></div></div></main></div><script src="assets/app.js"></script></body></html>

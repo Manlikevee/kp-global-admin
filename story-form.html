@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>New story · KP Global Admin</title>
+<link rel="icon" href="assets/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+<script>try{var t=localStorage.getItem('kp-theme');if(t)document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+</head><body data-page="stories"><div class="app" id="app"><aside class="side" id="side"></aside><div class="scrim" id="scrim"></div>
+<main class="main"><div class="top"><button class="ib ham" id="ham" aria-label="Open menu"></button><div class="crumb"><a href="dashboard.html">KP Global</a> / <a href="stories.html">Stories</a> / <b>New story</b></div>
+<div class="tools"><a class="ib" href="notifications.html" aria-label="Notifications"><span data-i="notify"></span><span class="dot"></span></a><button class="ib" id="theme"></button></div></div>
+<div class="stage"><a class="back" href="stories.html"><span data-i="back"></span>Stories</a>
+<div class="ph"><div><h1 data-te="Edit story">New story</h1><div class="sub" data-te="Update the details below, then save your changes.">Fill in the details below. You can edit this later.</div></div></div>
+<form class="fgrid" data-saved="Story saved" data-edit-title="Edit story" data-next="stories.html">
+<div class="card"><div class="f wide"><label>Title<input name="title" type="text" placeholder="Only you see this" data-edit="Youth night flyer" required></label><label>Image or video<label class="drop"><span data-i="upload"></span><span><em>Choose a file (9:16 works best)</em></span><input type="file" accept="image/*,video/*"></label></label><label>Link when tapped<input name="link" type="url" placeholder="Optional, e.g. an event" data-edit=""></label></div></div>
+<div class="side-c"><div class="card"><div class="f wide"><label>Status<select name="status" data-edit="Live"><option selected>Draft</option><option>Live</option></select></label><label>Disappears after<select name="ttl" data-edit="24 hours"><option selected>24 hours</option><option>12 hours</option><option>48 hours</option></select></label>
+<button class="btn p big" type="submit" data-te="Save changes">New story</button>
+<a class="btn big" href="stories.html" style="justify-content:center">Cancel</a>
+<a class="btn d big only-edit" href="#" style="justify-content:center" data-confirm="Delete this story?" data-msg="It will be removed from the app straight away." data-done="Story deleted" data-go="stories.html"><span data-i="trash"></span> Delete story</a></div></div></div>
+</form></div></main></div><script src="assets/app.js"></script></body></html>

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Add sermon · KP Global Admin</title>
+<link rel="icon" href="assets/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+<script>try{var t=localStorage.getItem('kp-theme');if(t)document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+</head><body data-page="sermons-media"><div class="app" id="app"><aside class="side" id="side"></aside><div class="scrim" id="scrim"></div>
+<main class="main"><div class="top"><button class="ib ham" id="ham" aria-label="Open menu"></button><div class="crumb"><a href="dashboard.html">KP Global</a> / <a href="sermons-media.html">Sermons &amp; Media</a> / <b>Add sermon</b></div>
+<div class="tools"><a class="ib" href="notifications.html" aria-label="Notifications"><span data-i="notify"></span><span class="dot"></span></a><button class="ib" id="theme"></button></div></div>
+<div class="stage"><a class="back" href="sermons-media.html"><span data-i="back"></span>Sermons & Media</a>
+<div class="ph"><div><h1 data-te="Edit sermon">Add sermon</h1><div class="sub" data-te="Update the details below, then save your changes.">Fill in the details below. You can edit this later.</div></div></div>
+<form class="fgrid" data-saved="Sermon saved" data-edit-title="Edit sermon" data-next="sermons-media.html">
+<div class="card"><div class="f wide"><label>Title<input name="title" type="text" placeholder="Sermon title" data-edit="Grace That Sustains" required></label><div class="cols"><label>Speaker<input name="speaker" type="text" placeholder="Who preached?" data-edit="Pastor Ade"></label><label>Date preached<input name="date" type="date" placeholder="" data-edit="2026-10-11"></label></div><div class="cols"><label>Series<input name="series" type="text" placeholder="Optional" data-edit="Grace series"></label><label>Scripture<input name="ref" type="text" placeholder="e.g. John 3:16" data-edit="2 Corinthians 12:9"></label></div><label>Description<textarea name="desc" rows="4" placeholder="A short summary for the app" data-edit="God’s grace carries us through every season."></textarea></label><label>Media file<label class="drop"><span data-i="upload"></span><span><em>Choose a video or audio file</em></span><input type="file" accept="video/*,audio/*"></label></label><label>Thumbnail<label class="drop"><span data-i="upload"></span><span><em>Choose an image</em></span><input type="file" accept="image/*"></label></label></div></div>
+<div class="side-c"><div class="card"><div class="f wide"><label>Status<select name="status" data-edit="Published"><option selected>Draft</option><option>Scheduled</option><option>Published</option></select></label><label>Publish on<input name="pub" type="date" placeholder="" data-edit="2026-10-12"></label><label class="c"><input type="checkbox" name="dl" data-edit="1" checked> Allow downloads</label>
+<button class="btn p big" type="submit" data-te="Save changes">Add sermon</button>
+<a class="btn big" href="sermons-media.html" style="justify-content:center">Cancel</a>
+<a class="btn d big only-edit" href="#" style="justify-content:center" data-confirm="Delete this sermon?" data-msg="It will be removed from the app straight away." data-done="Sermon deleted" data-go="sermons-media.html"><span data-i="trash"></span> Delete sermon</a></div></div></div>
+</form></div></main></div><script src="assets/app.js"></script></body></html>

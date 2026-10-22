@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Add category · KP Global Admin</title>
+<link rel="icon" href="assets/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+<script>try{var t=localStorage.getItem('kp-theme');if(t)document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+</head><body data-page="giving"><div class="app" id="app"><aside class="side" id="side"></aside><div class="scrim" id="scrim"></div>
+<main class="main"><div class="top"><button class="ib ham" id="ham" aria-label="Open menu"></button><div class="crumb"><a href="dashboard.html">KP Global</a> / <a href="giving.html">Giving &amp; Offerings</a> / <b>Add category</b></div>
+<div class="tools"><a class="ib" href="notifications.html" aria-label="Notifications"><span data-i="notify"></span><span class="dot"></span></a><button class="ib" id="theme"></button></div></div>
+<div class="stage"><a class="back" href="giving.html"><span data-i="back"></span>Giving & Offerings</a>
+<div class="ph"><div><h1 data-te="Edit giving category">Add category</h1><div class="sub" data-te="Update the details below, then save your changes.">Fill in the details below. You can edit this later.</div></div></div>
+<form class="fgrid" data-saved="Category saved" data-edit-title="Edit giving category" data-next="giving.html">
+<div class="card"><div class="f wide"><label>Category name<input name="name" type="text" placeholder="e.g. Missions" data-edit="Building fund" required></label><label>Description<textarea name="desc" rows="3" placeholder="Shown to members when they give" data-edit="Gifts towards the new church building."></textarea></label><label>Target amount<input name="target" type="number" placeholder="Optional" data-edit="50000"></label></div></div>
+<div class="side-c"><div class="card"><div class="f wide"><label>Status<select name="status" data-edit="Active"><option selected>Active</option><option>Draft</option></select></label><label class="c"><input type="checkbox" name="prog" data-edit="1" checked> Show progress to members</label>
+<button class="btn p big" type="submit" data-te="Save changes">Add category</button>
+<a class="btn big" href="giving.html" style="justify-content:center">Cancel</a>
+<a class="btn d big only-edit" href="#" style="justify-content:center" data-confirm="Delete this giving category?" data-msg="It will be removed from the app straight away." data-done="Giving category deleted" data-go="giving.html"><span data-i="trash"></span> Delete giving category</a></div></div></div>
+</form></div></main></div><script src="assets/app.js"></script></body></html>

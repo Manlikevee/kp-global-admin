@@ -1,90 +1,21 @@
 <!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Sign in · KP Global Admin</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="assets/style.css" />
-    <script>
-      try {
-        var t = localStorage.getItem("kp-theme");
-        if (t) document.documentElement.setAttribute("data-theme", t);
-      } catch (e) {}
-    </script>
-  </head>
-  <body>
-    <div class="login">
-      <section class="hero">
-        <div class="brand">
-          <div class="logo">KP</div>
-          KP Global
-        </div>
-        <div>
-          <h2>Serve your church from one place.</h2>
-          <p>
-            Manage members, sermons, events and prayer requests that power the
-            KP Global mobile app.
-          </p>
-        </div>
-        <ul>
-          <li>Publish devotionals and sermons in minutes</li>
-          <li>Review prayer requests and testimonies</li>
-          <li>Send announcements straight to members’ phones</li>
-        </ul>
-      </section>
-      <section class="pane">
-        <button class="ib" id="theme"></button>
-        <div class="box">
-          <h1>Welcome back</h1>
-          <div class="sub">Sign in to the administration portal.</div>
-          <!-- Demo only: replace this handler with a call to your auth API. -->
-          <form class="f" id="lf">
-            <label
-              >Email<input
-                type="email"
-                required
-                placeholder="admin@example.org"
-                autocomplete="username"
-            /></label>
-            <label
-              >Password<span class="pw"
-                ><input
-                  type="password"
-                  id="pw"
-                  required
-                  placeholder="Enter your password"
-                  autocomplete="current-password"
-                /><button type="button" id="sh">Show</button></span
-              ></label
-            >
-            <div class="row2">
-              <label class="c"
-                ><input type="checkbox" /> Keep me signed in</label
-              ><a href="#">Forgot password?</a>
-            </div>
-            <button class="btn p big" type="submit">Sign in</button>
-          </form>
-        </div>
-      </section>
-    </div>
-    <script src="assets/app.js"></script>
-    <script>
-      document.getElementById("sh").onclick = function () {
-        var p = document.getElementById("pw"),
-          s = p.type === "password";
-        p.type = s ? "text" : "password";
-        this.textContent = s ? "Hide" : "Show";
-      };
-      document.getElementById("lf").onsubmit = function (e) {
-        e.preventDefault();
-        location.href = "dashboard.html";
-      };
-    </script>
-  </body>
-</html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sign in · KP Global Admin</title>
+<link rel="icon" href="assets/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+<script>try{var t=localStorage.getItem("kp-theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+</head><body><div class="login">
+<section class="hero"><div class="brand"><img class="logo" src="assets/logo.png" alt=""><span>KP Global</span></div>
+<div><h2>Serve your church from one place.</h2><p>Manage members, sermons, events and prayer requests that power the KP Global mobile app.</p></div>
+<ul><li>Publish devotionals and sermons in minutes</li><li>Review prayer requests and praise reports</li><li>Send announcements straight to members’ phones</li></ul></section>
+<section class="pane"><button class="ib" id="theme"></button><div class="box"><h1>Welcome back</h1><div class="sub">Sign in to the administration portal.</div>
+<!-- Demo only: replace this handler with a call to your auth API. -->
+<form class="f" id="lf"><label>Email<input type="email" required placeholder="admin@example.org" autocomplete="username"></label>
+<label>Password<span class="pw"><input type="password" id="pw" required placeholder="Enter your password" autocomplete="current-password"><button type="button" id="sh">Show</button></span></label>
+<div class="row2"><label class="c"><input type="checkbox"> Keep me signed in</label><a href="#">Forgot password?</a></div>
+<button class="btn p big" type="submit">Sign in</button></form></div></section></div>
+<script src="assets/app.js"></script>
+<script>document.getElementById("sh").onclick=function(){var p=document.getElementById("pw"),s=p.type==="password";p.type=s?"text":"password";this.textContent=s?"Hide":"Show"};document.getElementById("lf").onsubmit=function(e){e.preventDefault();location.href="dashboard.html"};</script>
+</body></html>
