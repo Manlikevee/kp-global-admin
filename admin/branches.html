@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Branch Management · KP Global Admin</title>
+<link rel="icon" href="assets/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+<script>try{var t=localStorage.getItem('kp-theme');if(t)document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+</head><body data-page="branches"><div class="app" id="app"><aside class="side" id="side"></aside><div class="scrim" id="scrim"></div>
+<main class="main"><div class="top"><button class="ib ham" id="ham" type="button" aria-label="Open menu"></button><div class="crumb"><a href="dashboard.html">KP Global</a> / <b>Branches</b></div>
+<div class="tools"><a class="ib" href="../index.html" aria-label="View website" title="View website"><span data-i="globe"></span></a><a class="ib" href="notifications.html" aria-label="Notifications"><span data-i="notify"></span><span class="dot"></span></a><button class="ib" id="theme" type="button"></button></div></div>
+<div class="stage">
+<div class="ph"><div><h1>Branch Management</h1><div class="sub">Create and manage KP Global branches, their locations and who leads them.</div></div>
+<div class="acts"><button class="btn p" type="button" id="addBtn"><span data-i="plus"></span>Add New Branch</button></div></div>
+<div class="note" style="margin-bottom:14px"><span data-i="clock"></span><span>Demonstration data. Changes you make here stay in this browser tab and are not saved anywhere.</span></div>
+<div class="stats s3" id="stats" aria-live="polite"></div>
+<div class="toolbar" style="margin-top:14px"><div class="seg" id="seg" role="group" aria-label="Filter by status"><button type="button" class="on" data-f="all" aria-pressed="true">All</button><button type="button" data-f="active" aria-pressed="false">Active</button><button type="button" data-f="inactive" aria-pressed="false">Inactive</button></div>
+<input class="qs" id="q" type="search" placeholder="Search name or location…" aria-label="Search branches by name or location"></div>
+<div class="card"><div class="scroll"><table class="tbl rt"><thead><tr><th>Branch name</th><th>Location</th><th>Branch administrator</th><th>Contact</th><th>Status</th><th class="end">Actions</th></tr></thead><tbody id="tb"></tbody></table></div>
+<div class="empty" id="empty" hidden><div class="big2"><span data-i="search"></span></div><b>No branches match</b>Try a different search or status filter.</div></div>
+</div></main></div>
+<dialog id="bd" class="md" data-modal aria-labelledby="bdT"><form id="bf" novalidate>
+<div class="dh2"><div><h2 id="bdT">Add new branch</h2><p id="bdS">Add a branch and choose who leads it.</p></div><button class="ib sm" type="button" data-close aria-label="Close"><span data-i="x"></span></button></div>
+<div class="f wide">
+<label><span class="lb">Branch name <b class="req" aria-hidden="true">*</b></span><input name="name" required minlength="3" autocomplete="off" placeholder="e.g. KP Global Enugu"></label>
+<label><span class="lb">Location <b class="req" aria-hidden="true">*</b></span><input name="loc" required autocomplete="off" placeholder="Area, city, country"></label>
+<label><span class="lb">Branch administrator <b class="req" aria-hidden="true">*</b></span><input name="admin" required autocomplete="off" placeholder="e.g. Pst. Grace Okon"></label>
+<div class="cols"><label><span class="lb">Phone <b class="req" aria-hidden="true">*</b></span><input name="phone" type="tel" required placeholder="+234 803 555 0100"></label>
+<label><span class="lb">Email <b class="req" aria-hidden="true">*</b></span><input name="email" type="email" required placeholder="branch@kpglobal.example"></label></div>
+<label><span class="lb">Status</span><select name="status"><option value="active">Active</option><option value="inactive">Inactive</option></select></label>
+</div>
+<div class="acts"><button class="btn" type="button" data-close>Cancel</button><button class="btn p" type="submit" id="bSave">Save branch</button></div>
+</form></dialog>
+<dialog id="vd" class="md" data-modal aria-labelledby="vdT"><div class="dh2"><div><h2 id="vdT">Branch</h2><p id="vdS"></p></div><button class="ib sm" type="button" data-close aria-label="Close"><span data-i="x"></span></button></div>
+<div id="vBody"></div><div class="acts"><button class="btn" type="button" data-close>Close</button><button class="btn p" type="button" id="vEdit"><span data-i="edit"></span>Edit branch</button></div></dialog>
+<script src="assets/app.js"></script><script>
+
+var D = [
+ {id:1,name:'KP Global Lagos (HQ)',loc:'Ikeja, Lagos, Nigeria',admin:'Pst. Samuel Adebayo',phone:'+234 803 555 0142',email:'lagos@kpglobal.example',status:'active',members:642,workers:58,times:'Sun 8:00 AM and 10:30 AM · Wed 6:00 PM'},
+ {id:2,name:'KP Global Abuja',loc:'Wuse II, Abuja, Nigeria',admin:'Pst. Daniel Okoro',phone:'+234 809 555 0178',email:'abuja@kpglobal.example',status:'active',members:312,workers:28,times:'Sun 9:00 AM · Wed 6:30 PM'},
+ {id:3,name:'KP Global Port Harcourt',loc:'GRA Phase 2, Port Harcourt, Nigeria',admin:'Pst. Blessing Amadi',phone:'+234 805 555 0120',email:'portharcourt@kpglobal.example',status:'active',members:204,workers:19,times:'Sun 9:00 AM · Thu 6:00 PM'},
+ {id:4,name:'KP Global Accra',loc:'East Legon, Accra, Ghana',admin:'Pst. Kwesi Mensah',phone:'+233 24 555 0166',email:'accra@kpglobal.example',status:'active',members:276,workers:24,times:'Sun 8:30 AM · Wed 6:00 PM'},
+ {id:5,name:'KP Global Kumasi',loc:'Adum, Kumasi, Ghana',admin:'Pst. Abena Owusu',phone:'+233 20 555 0191',email:'kumasi@kpglobal.example',status:'active',members:158,workers:14,times:'Sun 9:00 AM'},
+ {id:6,name:'KP Global London',loc:'Peckham, London, United Kingdom',admin:'Pst. Michael Anane',phone:'+44 7700 900 142',email:'london@kpglobal.example',status:'active',members:131,workers:12,times:'Sun 11:00 AM · Fri 7:00 PM'},
+ {id:7,name:'KP Global Enugu',loc:'Independence Layout, Enugu, Nigeria',admin:'Pst. Chinedu Eze',phone:'+234 802 555 0133',email:'enugu@kpglobal.example',status:'inactive',members:64,workers:6,times:'Sun 9:00 AM'},
+ {id:8,name:'KP Global Manchester',loc:'Moss Side, Manchester, United Kingdom',admin:'Pst. Joy Adeleke',phone:'+44 7700 900 218',email:'manchester@kpglobal.example',status:'inactive',members:42,workers:4,times:'Sun 12:00 PM'}
+];
+var nextId = 9, f = 'all', editing = null, viewing = null;
+var $ = function (s) { return document.querySelector(s) }, E = kpEsc;
+var tb = $('#tb'), bd = $('#bd'), bf = $('#bf'), vd = $('#vd');
+
+function stats() {
+  var a = D.filter(function (x) { return x.status === 'active' }).length;
+  var cards = [['Total branches', D.length, 'across ' + new Set(D.map(function (x) { return x.loc.split(',').pop().trim() })).size + ' countries', 'branch'], ['Active branches', a, 'open to members', 'check'], ['Inactive branches', D.length - a, 'temporarily closed', 'lock']];
+  $('#stats').innerHTML = cards.map(function (c) { return '<div class="card st"><div class="h"><span class="chip">' + kpIcon(c[3]) + '</span>' + c[0] + '</div><div class="n">' + c[1] + '</div><div class="d">' + c[2] + '</div></div>' }).join('');
+}
+function render() {
+  var q = $('#q').value.trim().toLowerCase();
+  var rows = D.filter(function (x) { return (f === 'all' || x.status === f) && (!q || (x.name + ' ' + x.loc).toLowerCase().indexOf(q) > -1) });
+  tb.innerHTML = rows.map(function (x, i) {
+    var on = x.status === 'active';
+    return '<tr><td class="pri"><div class="who"><div class="av c' + (x.id % 4) + '">' + kpInitials(x.name.replace('KP Global ', '')) + '</div><div><a class="lnk" href="#" data-a="view" data-id="' + x.id + '">' + E(x.name) + '</a></div></div></td>' +
+      '<td data-l="Location">' + E(x.loc) + '</td><td data-l="Administrator">' + E(x.admin) + '</td>' +
+      '<td data-l="Contact">' + E(x.phone) + '<small style="display:block;color:var(--muted);font-weight:400">' + E(x.email) + '</small></td>' +
+      '<td data-l="Status"><span class="tag ' + (on ? 'ok' : 'bad') + '">' + (on ? 'Active' : 'Inactive') + '</span></td>' +
+      '<td class="end"><button class="ib sm" type="button" data-a="view" data-id="' + x.id + '" aria-label="View ' + E(x.name) + '" title="View">' + kpIcon('eye') + '</button>' +
+      '<button class="ib sm" type="button" data-a="edit" data-id="' + x.id + '" aria-label="Edit ' + E(x.name) + '" title="Edit">' + kpIcon('edit') + '</button>' +
+      '<button class="ib sm" type="button" data-a="toggle" data-id="' + x.id + '" aria-label="' + (on ? 'Deactivate ' : 'Activate ') + E(x.name) + '" title="' + (on ? 'Deactivate' : 'Activate') + '">' + kpIcon('power') + '</button></td></tr>';
+  }).join('');
+  $('#empty').hidden = rows.length > 0;
+  document.querySelector('.tbl').hidden = rows.length === 0;
+  var c = { all: D.length, active: 0, inactive: 0 }; D.forEach(function (x) { c[x.status]++ });
+  document.querySelectorAll('#seg button').forEach(function (b) { var n = b.dataset.f; b.innerHTML = b.textContent.replace(/\s*\d+$/, '') + ' <i>' + c[n] + '</i>' });
+  stats();
+}
+function byId(id) { return D.filter(function (x) { return x.id === +id })[0] }
+function openForm(b) {
+  editing = b || null; kpClearErrors(bf); bf.reset();
+  $('#bdT').textContent = b ? 'Edit branch' : 'Add new branch';
+  $('#bdS').textContent = b ? 'Update details for ' + b.name + '.' : 'Add a branch and choose who leads it.';
+  $('#bSave').textContent = b ? 'Save changes' : 'Add branch';
+  if (b) ['name', 'loc', 'admin', 'phone', 'email', 'status'].forEach(function (k) { bf.elements[k].value = b[k] });
+  bd.showModal(); bf.elements.name.focus();
+}
+function openView(b) {
+  viewing = b;
+  $('#vdT').textContent = b.name; $('#vdS').innerHTML = '<span class="tag ' + (b.status === 'active' ? 'ok' : 'bad') + '">' + (b.status === 'active' ? 'Active' : 'Inactive') + '</span>';
+  $('#vBody').innerHTML = '<div class="mini-stats" style="margin-bottom:12px"><div><b>' + b.members + '</b><span>Members</span></div><div><b>' + b.workers + '</b><span>Workers</span></div><div><b>' + b.times.split('·').length + '</b><span>Weekly services</span></div></div>' +
+    '<dl class="kv"><dt>Location</dt><dd>' + E(b.loc) + '</dd><dt>Administrator</dt><dd>' + E(b.admin) + '</dd><dt>Phone</dt><dd>' + E(b.phone) + '</dd><dt>Email</dt><dd>' + E(b.email) + '</dd><dt>Service times</dt><dd>' + E(b.times) + '</dd></dl>';
+  vd.showModal();
+}
+$('#addBtn').onclick = function () { openForm() };
+$('#vEdit').onclick = function () { vd.close(); openForm(viewing) };
+bf.onsubmit = function (e) {
+  e.preventDefault(); if (!kpValidate(bf)) return;
+  var v = {}; ['name', 'loc', 'admin', 'phone', 'email', 'status'].forEach(function (k) { v[k] = bf.elements[k].value.trim() });
+  if (D.some(function (x) { return x.name.toLowerCase() === v.name.toLowerCase() && x !== editing })) { bf.elements.name.setAttribute('aria-invalid', 'true'); var er = bf.elements.name.closest('label').querySelector('.err'); er.hidden = false; er.textContent = 'A branch with this name already exists.'; bf.elements.name.focus(); return }
+  if (editing) { Object.assign(editing, v); kpToast('Branch updated (demo)') }
+  else { D.unshift(Object.assign({ id: nextId++, members: 0, workers: 0, times: 'Not set yet' }, v)); kpToast('Branch added (demo)') }
+  bd.close(); render();
+};
+tb.addEventListener('click', function (e) {
+  var a = e.target.closest('[data-a]'); if (!a) return; e.preventDefault();
+  var b = byId(a.dataset.id), k = a.dataset.a;
+  if (k === 'view') openView(b); else if (k === 'edit') openForm(b);
+  else if (b.status === 'active') kpConfirm({ title: 'Deactivate ' + b.name + '?', msg: 'The branch will be shown as inactive in this demo. Members and workers are not affected.', yes: 'Deactivate', danger: true }, function () { b.status = 'inactive'; render(); kpToast(b.name + ' deactivated (demo)') });
+  else { b.status = 'active'; render(); kpToast(b.name + ' activated (demo)') }
+});
+$('#q').oninput = render;
+$('#seg').addEventListener('click', function (e) {
+  var b = e.target.closest('button'); if (!b) return; f = b.dataset.f;
+  document.querySelectorAll('#seg button').forEach(function (x) { x.classList.toggle('on', x === b); x.setAttribute('aria-pressed', x === b) }); render();
+});
+render();
+
+</script></body></html>

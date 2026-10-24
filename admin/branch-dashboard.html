@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Branch Dashboard · KP Global Admin</title>
+<link rel="icon" href="assets/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+<script>try{var t=localStorage.getItem('kp-theme');if(t)document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+</head><body data-page="branch-dashboard" data-role="branch"><div class="app" id="app"><aside class="side" id="side"></aside><div class="scrim" id="scrim"></div>
+<main class="main"><div class="top"><button class="ib ham" id="ham" type="button" aria-label="Open menu"></button><div class="crumb"><a href="branch-dashboard.html">KP Global</a> / <b>Branch dashboard</b></div>
+<div class="tools"><a class="ib" href="../index.html" aria-label="View website" title="View website"><span data-i="globe"></span></a><a class="ib" href="notifications.html" aria-label="Notifications"><span data-i="notify"></span><span class="dot"></span></a><button class="ib" id="theme" type="button"></button></div></div>
+<div class="stage">
+<div class="welcome" id="top"><div><div class="pill"><span data-i="pin"></span>KP Global Abuja · Wuse II</div><h1 id="gr">Welcome back, Pastor Daniel</h1><p>You are managing <b>one branch</b>. Here is what needs your attention this week.</p></div>
+<div class="acts"><a class="btn p" href="announcement-form.html"><span data-i="plus"></span>Post announcement</a><a class="btn" href="event-form.html">Add event</a></div></div>
+<div class="note" style="margin-bottom:14px"><span data-i="clock"></span><span>Demonstration data for the Branch Admin view. Use “Demo: preview as” in the sidebar to switch roles.</span></div>
+<div class="stats">
+<div class="card st"><div class="h"><span class="chip" data-i="members"></span>Total members</div><div class="n">312</div><div class="d">+9 this month</div></div>
+<div class="card st"><div class="h"><span class="chip" data-i="worker"></span>Total workers</div><div class="n">28</div><div class="d">across 7 ministries</div></div>
+<div class="card st"><div class="h"><span class="chip" data-i="clip"></span>Pending applications</div><div class="n" id="pendN">3</div><div class="d">waiting for your review</div></div>
+<div class="card st"><div class="h"><span class="chip" data-i="events"></span>Upcoming events</div><div class="n">4</div><div class="d">next: Sunday service</div></div></div>
+<div class="grid">
+<div class="card"><div class="bar"><h2>Recent announcements</h2><a class="btn s" href="announcements.html">All announcements</a></div>
+<div class="row"><span class="chip" data-i="announce"></span><div class="t"><b>Harvest Thanksgiving Service</b><span>Posted 2 days ago · Sunday 1 Nov, 9:00 AM</span></div><span class="tag">Pinned</span></div><div class="row"><span class="chip" data-i="announce"></span><div class="t"><b>Choir auditions are open</b><span>Posted 4 days ago · Saturdays after 4:00 PM</span></div></div><div class="row"><span class="chip" data-i="announce"></span><div class="t"><b>Midweek service moves online this week</b><span>Posted 6 days ago · Wednesday 6:30 PM on Zoom</span></div></div></div>
+<div class="card"><div class="bar"><h2>Upcoming events</h2><a class="btn s" href="events.html">All events</a></div>
+<div class="row"><div class="date-box"><b>25</b><span>OCT</span></div><div class="t"><b>Sunday Worship Service</b><span>9:00 AM · Main auditorium</span></div><span class="tag ok">Confirmed</span></div><div class="row"><div class="date-box"><b>28</b><span>OCT</span></div><div class="t"><b>Midweek Bible Study</b><span>6:30 PM · Online</span></div><span class="tag ok">Confirmed</span></div><div class="row"><div class="date-box"><b>31</b><span>OCT</span></div><div class="t"><b>Youth Fellowship Night</b><span>5:00 PM · Youth hall</span></div><span class="tag w">Draft</span></div></div></div>
+<div class="grid" style="grid-template-columns:1fr 1fr">
+<div class="card"><div class="bar"><h2>Pending worker applications</h2><a class="btn s" href="workers.html?tab=applications">Review all</a></div><div id="pend" aria-live="polite"></div></div>
+<div class="card"><h2>Recent activity</h2><p class="s">What happened in your branch lately</p><ul class="tl"><li>Ibrahim Musa applied to join Ushering<span>Today, 8:40 AM</span></li><li>Sunday service attendance recorded: 286<span>Yesterday</span></li><li>Peter Asante was added as a Media worker<span>2 days ago</span></li><li>Harvest Thanksgiving announcement published<span>2 days ago</span></li></ul></div></div>
+<div class="card" style="margin-top:14px"><h2>Quick actions</h2><p class="s">Common tasks for your branch</p><div class="qa">
+<a href="announcement-form.html"><span class="chip" data-i="announce"></span>Post announcement</a><a href="event-form.html"><span class="chip" data-i="events"></span>Add event</a><a href="workers.html?tab=applications"><span class="chip" data-i="clip"></span>Review applications</a><a href="member-form.html"><span class="chip" data-i="members"></span>Add member</a><a href="sermon-form.html"><span class="chip" data-i="sermons"></span>Upload sermon</a><a href="notifications.html"><span class="chip" data-i="notify"></span>Send notification</a></div></div>
+</div></main></div><script src="assets/app.js"></script><script>
+
+var P = [
+ {id:1,n:'Chiamaka Obi',m:'Choir & Worship',d:'21 Oct'}, {id:4,n:'Ibrahim Musa',m:'Ushering',d:'18 Oct'}, {id:7,n:'Lydia Chukwu',m:'Prayer Team',d:'17 Oct'}
+];
+function draw() {
+  document.getElementById('pendN').textContent = P.length;
+  document.getElementById('pend').innerHTML = P.length ? P.map(function (x) {
+    return '<div class="row"><div class="av c' + (x.id % 4) + '" aria-hidden="true">' + kpInitials(x.n) + '</div><div class="t"><b>' + kpEsc(x.n) + '</b><span>' + kpEsc(x.m) + ' · applied ' + x.d + '</span></div>' +
+      '<button class="btn s" type="button" data-a="approve" data-id="' + x.id + '" aria-label="Approve ' + kpEsc(x.n) + '">Approve</button><button class="btn s d" type="button" data-a="reject" data-id="' + x.id + '" aria-label="Reject ' + kpEsc(x.n) + '">Reject</button></div>';
+  }).join('') : '<div class="empty"><div class="big2"><span>' + kpIcon('check') + '</span></div><b>All caught up</b>No applications are waiting for review.</div>';
+}
+document.getElementById('pend').addEventListener('click', function (e) {
+  var b = e.target.closest('[data-a]'); if (!b) return; var x = P.filter(function (p) { return p.id === +b.dataset.id })[0], ok = b.dataset.a === 'approve';
+  kpConfirm({ title: (ok ? 'Approve ' : 'Reject ') + x.n + '?', msg: 'Demo only: this updates the list on this page and does not save anything or notify the applicant.', yes: ok ? 'Approve' : 'Reject', danger: !ok }, function () { P = P.filter(function (p) { return p !== x }); draw(); kpToast(x.n + (ok ? ' approved' : ' rejected') + ' (demo)') });
+});
+draw();
+var h = new Date().getHours(); document.getElementById('gr').textContent = (h < 12 ? 'Good morning' : h < 18 ? 'Good afternoon' : 'Good evening') + ', Pastor Daniel';
+
+</script></body></html>

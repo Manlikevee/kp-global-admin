@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Workers · KP Global Admin</title>
+<link rel="icon" href="assets/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+<script>try{var t=localStorage.getItem('kp-theme');if(t)document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+</head><body data-page="workers"><div class="app" id="app"><aside class="side" id="side"></aside><div class="scrim" id="scrim"></div>
+<main class="main"><div class="top"><button class="ib ham" id="ham" type="button" aria-label="Open menu"></button><div class="crumb"><a href="dashboard.html">KP Global</a> / <b>Workers</b></div>
+<div class="tools"><a class="ib" href="../index.html" aria-label="View website" title="View website"><span data-i="globe"></span></a><a class="ib" href="notifications.html" aria-label="Notifications"><span data-i="notify"></span><span class="dot"></span></a><button class="ib" id="theme" type="button"></button></div></div>
+<div class="stage">
+<div class="ph"><div><h1>Workers</h1><div class="sub" id="sub">Church workers across all branches, and people who have applied to serve.</div></div>
+<div class="acts"><button class="btn p" type="button" id="addBtn"><span data-i="plus"></span>Add worker</button></div></div>
+<div class="note" style="margin-bottom:14px"><span data-i="clock"></span><span>Demonstration data. Approving, rejecting and editing only change what you see on this page.</span></div>
+<div class="stats" id="stats" aria-live="polite"></div>
+<div class="toolbar" style="margin-top:14px">
+<div class="seg" id="tabs" role="tablist" aria-label="Workers sections"><button type="button" role="tab" id="t-all" aria-controls="p-all" aria-selected="true" class="on" data-tab="all">All Workers <i id="c-all"></i></button><button type="button" role="tab" id="t-apps" aria-controls="p-apps" aria-selected="false" data-tab="apps">Applications <i id="c-apps"></i></button></div>
+<select class="fs" id="fb" aria-label="Filter by branch"></select>
+<select class="fs" id="fs" aria-label="Filter by status"></select>
+<input class="qs" id="q" type="search" placeholder="Search name, ministry…" aria-label="Search workers"></div>
+<div class="card" id="p-all" role="tabpanel" aria-labelledby="t-all"><div class="scroll"><table class="tbl rt"><thead><tr><th>Worker</th><th>Branch</th><th>Ministry</th><th>Responsibility</th><th>Status</th><th class="end">Actions</th></tr></thead><tbody id="wb"></tbody></table></div>
+<div class="empty" id="we" hidden><div class="big2"><span data-i="search"></span></div><b>No workers found</b>Try a different search or filter.</div></div>
+<div class="card" id="p-apps" role="tabpanel" aria-labelledby="t-apps" hidden><div class="scroll"><table class="tbl rt"><thead><tr><th>Applicant</th><th>Preferred branch</th><th>Ministry of interest</th><th>Applied</th><th>Status</th><th class="end">Actions</th></tr></thead><tbody id="ab"></tbody></table></div>
+<div class="empty" id="ae" hidden><div class="big2"><span data-i="clip"></span></div><b>No applications found</b>Try a different search or filter.</div></div>
+</div></main></div>
+<dialog id="wd" class="md" data-modal aria-labelledby="wdT"><form id="wf" novalidate>
+<div class="dh2"><div><h2 id="wdT">Add worker</h2><p id="wdS">Add someone who serves in a ministry.</p></div><button class="ib sm" type="button" data-close aria-label="Close"><span data-i="x"></span></button></div>
+<div class="f wide">
+<label><span class="lb">Full name <b class="req" aria-hidden="true">*</b></span><input name="name" required minlength="3" autocomplete="off"></label>
+<div class="cols"><label><span class="lb">Email <b class="req" aria-hidden="true">*</b></span><input name="email" type="email" required></label>
+<label><span class="lb">Phone number <b class="req" aria-hidden="true">*</b></span><input name="phone" type="tel" required placeholder="+234 803 555 0100"></label></div>
+<div class="cols"><label><span class="lb">Branch <b class="req" aria-hidden="true">*</b></span><select name="branch" required><option value="">Choose a branch</option><option>Lagos (HQ)</option><option>Abuja</option><option>Port Harcourt</option><option>Accra</option><option>Kumasi</option><option>London</option></select></label>
+<label><span class="lb">Ministry <b class="req" aria-hidden="true">*</b></span><select name="ministry" required><option value="">Choose a ministry</option><option>Choir &amp; Worship</option><option>Ushering</option><option>Media &amp; Technology</option><option>Children's Ministry</option><option>Youth Ministry</option><option>Prayer Team</option><option>Hospitality</option><option>Welfare &amp; Outreach</option></select></label></div>
+<label><span class="lb">Responsibility <b class="req" aria-hidden="true">*</b></span><input name="resp" required autocomplete="off" placeholder="e.g. Head usher, main auditorium"></label>
+<label><span class="lb">Status</span><select name="status"><option value="active">Active</option><option value="inactive">Inactive</option></select></label>
+</div><div class="acts"><button class="btn" type="button" data-close>Cancel</button><button class="btn p" type="submit" id="wSave">Add worker</button></div></form></dialog>
+<dialog id="vd" class="md" data-modal aria-labelledby="vdT"><div class="dh2"><div><h2 id="vdT"></h2><p id="vdS"></p></div><button class="ib sm" type="button" data-close aria-label="Close"><span data-i="x"></span></button></div>
+<div id="vBody"></div><div class="acts" id="vActs"></div></dialog>
+<script src="assets/app.js"></script><script>
+
+var ME = 'Abuja';  /* branch used when previewing as a Branch admin */
+var scoped = kpRole === 'branch';
+var W = [
+ {id:1,name:'Ruth Bello',email:'ruth.bello@example.org',phone:'+234 809 555 0101',branch:'Abuja',ministry:'Choir & Worship',resp:'Lead vocalist, Sunday service',status:'active'},
+ {id:2,name:'Daniel Okafor',email:'daniel.okafor@example.org',phone:'+234 809 555 0102',branch:'Abuja',ministry:'Ushering',resp:'Head usher, main auditorium',status:'active'},
+ {id:3,name:'Naomi Eze',email:'naomi.eze@example.org',phone:'+234 809 555 0103',branch:'Abuja',ministry:"Children's Ministry",resp:'Sunday school teacher',status:'inactive'},
+ {id:4,name:'Samuel Boateng',email:'samuel.boateng@example.org',phone:'+233 24 555 0104',branch:'Accra',ministry:'Youth Ministry',resp:'Youth fellowship leader',status:'active'},
+ {id:5,name:'Esther Mensah',email:'esther.mensah@example.org',phone:'+233 24 555 0105',branch:'Accra',ministry:'Prayer Team',resp:'Intercessory team coordinator',status:'active'},
+ {id:6,name:'Tunde Kareem',email:'tunde.kareem@example.org',phone:'+234 803 555 0106',branch:'Lagos (HQ)',ministry:'Media & Technology',resp:'Sound and livestream desk',status:'active'},
+ {id:7,name:'Blessing Nwosu',email:'blessing.nwosu@example.org',phone:'+234 803 555 0107',branch:'Lagos (HQ)',ministry:'Hospitality',resp:'Welcome desk',status:'active'},
+ {id:8,name:'Kofi Owusu',email:'kofi.owusu@example.org',phone:'+233 20 555 0108',branch:'Kumasi',ministry:'Ushering',resp:'Parking and security',status:'inactive'},
+ {id:9,name:'Joy Adeleke',email:'joy.adeleke@example.org',phone:'+234 805 555 0109',branch:'Port Harcourt',ministry:"Children's Ministry",resp:'Nursery coordinator',status:'active'},
+ {id:10,name:'Michael Anane',email:'michael.anane@example.org',phone:'+44 7700 900 110',branch:'London',ministry:'Media & Technology',resp:'Camera operator',status:'active'},
+ {id:11,name:'Funke Ojo',email:'funke.ojo@example.org',phone:'+234 803 555 0111',branch:'Lagos (HQ)',ministry:'Welfare & Outreach',resp:'Outreach coordinator',status:'active'},
+ {id:12,name:'Peter Asante',email:'peter.asante@example.org',phone:'+234 809 555 0112',branch:'Abuja',ministry:'Media & Technology',resp:'Slides and projection',status:'active'}
+];
+var A = [
+ {id:1,name:'Chiamaka Obi',email:'chiamaka.obi@example.org',phone:'+234 809 555 0201',branch:'Abuja',ministry:'Choir & Worship',date:'21 Oct 2026',status:'pending',skills:'Alto voice, 6 years in a university choir.',why:'I want to use my voice to lead people into worship.'},
+ {id:2,name:'Emmanuel Tetteh',email:'emmanuel.tetteh@example.org',phone:'+233 24 555 0202',branch:'Accra',ministry:'Media & Technology',date:'20 Oct 2026',status:'pending',skills:'Video editing and OBS livestreaming.',why:'I would like to help more people join our services online.'},
+ {id:3,name:'Hannah Williams',email:'hannah.williams@example.org',phone:'+44 7700 900 203',branch:'London',ministry:'Hospitality',date:'19 Oct 2026',status:'pending',skills:'Customer service and event hosting.',why:'I love welcoming first-time visitors and making them feel at home.'},
+ {id:4,name:'Ibrahim Musa',email:'ibrahim.musa@example.org',phone:'+234 809 555 0204',branch:'Abuja',ministry:'Ushering',date:'18 Oct 2026',status:'pending',skills:'Crowd management at community events.',why:'I want to serve behind the scenes so services run smoothly.'},
+ {id:5,name:'Adaeze Nnamdi',email:'adaeze.nnamdi@example.org',phone:'+234 803 555 0205',branch:'Lagos (HQ)',ministry:"Children's Ministry",date:'12 Oct 2026',status:'approved',skills:'Primary school teacher.',why:'Children are our future and I want to invest in them.'},
+ {id:6,name:'Kwame Darko',email:'kwame.darko@example.org',phone:'+233 20 555 0206',branch:'Kumasi',ministry:'Youth Ministry',date:'10 Oct 2026',status:'rejected',skills:'Football coaching.',why:'I would like to mentor teenagers through sport.'},
+ {id:7,name:'Lydia Chukwu',email:'lydia.chukwu@example.org',phone:'+234 809 555 0207',branch:'Abuja',ministry:'Prayer Team',date:'17 Oct 2026',status:'pending',skills:'Intercessory prayer, hospital visitation.',why:'Prayer has carried my family and I want to carry others.'},
+ {id:8,name:'Segun Alabi',email:'segun.alabi@example.org',phone:'+234 805 555 0208',branch:'Port Harcourt',ministry:'Welfare & Outreach',date:'15 Oct 2026',status:'approved',skills:'Logistics and food distribution.',why:'I want to help meet practical needs in our neighbourhood.'}
+];
+if (scoped) { W = W.filter(function (x) { return x.branch === ME }); A = A.filter(function (x) { return x.branch === ME }) }
+var nid = 100, tab = /tab=applications/.test(location.search) ? 'apps' : 'all', editing = null;
+var $ = function (s) { return document.querySelector(s) }, E = kpEsc;
+var ST = { active: ['ok', 'Active'], inactive: ['bad', 'Inactive'], pending: ['w', 'Pending'], approved: ['ok', 'Approved'], rejected: ['bad', 'Rejected'] };
+function tag(s) { return '<span class="tag ' + ST[s][0] + '">' + ST[s][1] + '</span>' }
+var wd = $('#wd'), wf = $('#wf'), vd = $('#vd');
+
+if (scoped) { $('#fb').hidden = true; $('#wf').elements.branch.value = ME; $('#sub').textContent = 'Workers and applications for KP Global ' + ME + '.' }
+else $('#fb').innerHTML = '<option value="">All branches</option>' + ['Lagos (HQ)', 'Abuja', 'Port Harcourt', 'Accra', 'Kumasi', 'London'].map(function (b) { return '<option>' + b + '</option>' }).join('');
+
+function statusOpts() {
+  var l = tab === 'all' ? [['', 'All statuses'], ['active', 'Active'], ['inactive', 'Inactive']] : [['', 'All statuses'], ['pending', 'Pending'], ['approved', 'Approved'], ['rejected', 'Rejected']];
+  $('#fs').innerHTML = l.map(function (o) { return '<option value="' + o[0] + '">' + o[1] + '</option>' }).join('');
+}
+function stats() {
+  var act = W.filter(function (x) { return x.status === 'active' }).length, pen = A.filter(function (x) { return x.status === 'pending' }).length;
+  var c = [['Total workers', W.length, scoped ? 'in KP Global ' + ME : 'across all branches', 'worker'], ['Active workers', act, 'currently serving', 'check'], ['Pending applications', pen, 'waiting for review', 'clip'], ['Inactive workers', W.length - act, 'not currently serving', 'lock']];
+  $('#stats').innerHTML = c.map(function (x) { return '<div class="card st"><div class="h"><span class="chip">' + kpIcon(x[3]) + '</span>' + x[0] + '</div><div class="n">' + x[1] + '</div><div class="d">' + x[2] + '</div></div>' }).join('');
+  $('#c-all').textContent = W.length; $('#c-apps').textContent = A.length;
+}
+function match(x, t) {
+  var q = $('#q').value.trim().toLowerCase(), b = $('#fb').value, s = $('#fs').value;
+  var hay = (x.name + ' ' + x.email + ' ' + x.ministry + ' ' + (x.resp || '') + ' ' + x.branch).toLowerCase();
+  return (!q || hay.indexOf(q) > -1) && (!b || x.branch === b) && (!s || x.status === s);
+}
+function render() {
+  var w = W.filter(match), a = A.filter(match);
+  $('#wb').innerHTML = w.map(function (x) {
+    var on = x.status === 'active';
+    return '<tr><td class="pri"><div class="who"><div class="av c' + (x.id % 4) + '" aria-hidden="true">' + kpInitials(x.name) + '</div><div><a class="lnk" href="#" data-k="w" data-a="view" data-id="' + x.id + '">' + E(x.name) + '</a><small>' + E(x.email) + '</small></div></div></td>' +
+      '<td data-l="Branch">' + E(x.branch) + '</td><td data-l="Ministry">' + E(x.ministry) + '</td><td data-l="Responsibility">' + E(x.resp) + '</td><td data-l="Status">' + tag(x.status) + '</td>' +
+      '<td class="end"><button class="ib sm" type="button" data-k="w" data-a="view" data-id="' + x.id + '" aria-label="View ' + E(x.name) + '" title="View">' + kpIcon('eye') + '</button>' +
+      '<button class="ib sm" type="button" data-k="w" data-a="edit" data-id="' + x.id + '" aria-label="Edit ' + E(x.name) + '" title="Edit">' + kpIcon('edit') + '</button>' +
+      '<button class="ib sm" type="button" data-k="w" data-a="toggle" data-id="' + x.id + '" aria-label="' + (on ? 'Mark ' + E(x.name) + ' inactive' : 'Mark ' + E(x.name) + ' active') + '" title="' + (on ? 'Mark inactive' : 'Mark active') + '">' + kpIcon('power') + '</button></td></tr>';
+  }).join('');
+  $('#we').hidden = w.length > 0; $('#p-all .scroll').hidden = !w.length;
+  $('#ab').innerHTML = a.map(function (x) {
+    var p = x.status === 'pending';
+    return '<tr><td class="pri"><div class="who"><div class="av c' + (x.id % 4) + '" aria-hidden="true">' + kpInitials(x.name) + '</div><div><a class="lnk" href="#" data-k="a" data-a="view" data-id="' + x.id + '">' + E(x.name) + '</a><small>' + E(x.email) + '</small></div></div></td>' +
+      '<td data-l="Branch">' + E(x.branch) + '</td><td data-l="Ministry">' + E(x.ministry) + '</td><td data-l="Applied">' + E(x.date) + '</td><td data-l="Status">' + tag(x.status) + '</td>' +
+      '<td class="end"><button class="ib sm" type="button" data-k="a" data-a="view" data-id="' + x.id + '" aria-label="View application from ' + E(x.name) + '" title="View">' + kpIcon('eye') + '</button>' +
+      '<button class="btn s" type="button" data-k="a" data-a="approve" data-id="' + x.id + '"' + (p ? '' : ' disabled') + ' aria-label="Approve ' + E(x.name) + '">Approve</button> ' +
+      '<button class="btn s d" type="button" data-k="a" data-a="reject" data-id="' + x.id + '"' + (p ? '' : ' disabled') + ' aria-label="Reject ' + E(x.name) + '">Reject</button></td></tr>';
+  }).join('');
+  $('#ae').hidden = a.length > 0; $('#p-apps .scroll').hidden = !a.length;
+  stats();
+}
+function setTab(t) {
+  tab = t; document.querySelectorAll('#tabs button').forEach(function (b) { var on = b.dataset.tab === t; b.classList.toggle('on', on); b.setAttribute('aria-selected', on) });
+  $('#p-all').hidden = t !== 'all'; $('#p-apps').hidden = t !== 'apps';
+  $('#q').placeholder = t === 'all' ? 'Search name, ministry…' : 'Search applicant, ministry…';
+  $('#addBtn').hidden = t !== 'all'; statusOpts(); render();
+}
+function get(k, id) { return (k === 'w' ? W : A).filter(function (x) { return x.id === +id })[0] }
+function kv(rows) { return '<dl class="kv">' + rows.map(function (r) { return '<dt>' + r[0] + '</dt><dd>' + E(r[1]) + '</dd>' }).join('') + '</dl>' }
+function viewWorker(x) {
+  $('#vdT').textContent = x.name; $('#vdS').innerHTML = tag(x.status);
+  $('#vBody').innerHTML = kv([['Email', x.email], ['Phone', x.phone], ['Branch', x.branch], ['Ministry', x.ministry], ['Responsibility', x.resp]]);
+  $('#vActs').innerHTML = '<button class="btn" type="button" data-close>Close</button><button class="btn p" type="button" id="vEdit">Edit worker</button>';
+  $('#vEdit').onclick = function () { vd.close(); openForm(x) }; vd.showModal();
+}
+function viewApp(x) {
+  $('#vdT').textContent = x.name; $('#vdS').innerHTML = tag(x.status) + ' <span style="color:var(--muted);font-size:13px">Applied ' + E(x.date) + '</span>';
+  $('#vBody').innerHTML = kv([['Email', x.email], ['Phone', x.phone], ['Preferred branch', x.branch], ['Ministry', x.ministry], ['Skills', x.skills], ['Why serve', x.why]]);
+  $('#vActs').innerHTML = '<button class="btn" type="button" data-close>Close</button>' + (x.status === 'pending' ? '<button class="btn d" type="button" id="vRej">Reject</button><button class="btn p" type="button" id="vApp">Approve</button>' : '');
+  if (x.status === 'pending') { $('#vRej').onclick = function () { vd.close(); decide(x, 'rejected') }; $('#vApp').onclick = function () { vd.close(); decide(x, 'approved') } }
+  vd.showModal();
+}
+function decide(x, to) {
+  var ok = to === 'approved';
+  kpConfirm({ title: (ok ? 'Approve ' : 'Reject ') + x.name + '?', msg: ok ? 'They will be shown in All Workers as an active worker. This is a demo: nothing is saved or sent to the applicant.' : 'The application will be marked as rejected. This is a demo: nothing is saved or sent to the applicant.', yes: ok ? 'Approve' : 'Reject', danger: !ok }, function () {
+    x.status = to;
+    if (ok && !W.some(function (w) { return w.email === x.email })) W.unshift({ id: nid++, name: x.name, email: x.email, phone: x.phone, branch: x.branch, ministry: x.ministry, resp: 'New worker, to be assigned', status: 'active' });
+    render(); kpToast(x.name + (ok ? ' approved' : ' rejected') + ' (demo)');
+  });
+}
+function openForm(x) {
+  editing = x || null; kpClearErrors(wf); wf.reset();
+  $('#wdT').textContent = x ? 'Edit worker' : 'Add worker'; $('#wdS').textContent = x ? 'Update details for ' + x.name + '.' : 'Add someone who serves in a ministry.'; $('#wSave').textContent = x ? 'Save changes' : 'Add worker';
+  if (scoped) { wf.elements.branch.value = ME; wf.elements.branch.disabled = true } else wf.elements.branch.disabled = false;
+  if (x) ['name', 'email', 'phone', 'branch', 'ministry', 'resp', 'status'].forEach(function (k) { wf.elements[k].value = x[k] });
+  wd.showModal(); wf.elements.name.focus();
+}
+wf.onsubmit = function (e) {
+  e.preventDefault(); wf.elements.branch.disabled = false; var ok = kpValidate(wf); if (scoped) wf.elements.branch.disabled = true; if (!ok) return;
+  var v = {}; ['name', 'email', 'phone', 'branch', 'ministry', 'resp', 'status'].forEach(function (k) { v[k] = wf.elements[k].value.trim() });
+  if (scoped) v.branch = ME;
+  if (editing) { Object.assign(editing, v); kpToast('Worker updated (demo)') } else { W.unshift(Object.assign({ id: nid++ }, v)); kpToast('Worker added (demo)') }
+  wd.close(); render();
+};
+document.addEventListener('click', function (e) {
+  var a = e.target.closest('[data-a]'); if (!a || a.disabled) return; e.preventDefault();
+  var x = get(a.dataset.k, a.dataset.id), k = a.dataset.a; if (!x) return;
+  if (k === 'view') (a.dataset.k === 'w' ? viewWorker : viewApp)(x);
+  else if (k === 'edit') openForm(x);
+  else if (k === 'toggle') { x.status = x.status === 'active' ? 'inactive' : 'active'; render(); kpToast(x.name + ' marked ' + x.status + ' (demo)') }
+  else decide(x, k === 'approve' ? 'approved' : 'rejected');
+});
+$('#tabs').addEventListener('click', function (e) { var b = e.target.closest('button'); if (b) setTab(b.dataset.tab) });
+$('#tabs').addEventListener('keydown', function (e) { if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') { var t = tab === 'all' ? 'apps' : 'all'; setTab(t); $('#t-' + t).focus() } });
+['#q', '#fb', '#fs'].forEach(function (s) { $(s).oninput = $(s).onchange = render });
+$('#addBtn').onclick = function () { openForm() };
+setTab(tab);
+
+</script></body></html>

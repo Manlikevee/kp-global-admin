@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Apply to Become a Worker · KP Global Admin</title>
+<link rel="icon" href="assets/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+<script>try{var t=localStorage.getItem('kp-theme');if(t)document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+</head><body data-page="apply-worker" data-role="member"><div class="app" id="app"><aside class="side" id="side"></aside><div class="scrim" id="scrim"></div>
+<main class="main"><div class="top"><button class="ib ham" id="ham" type="button" aria-label="Open menu"></button><div class="crumb"><a href="member-dashboard.html">KP Global</a> / <b>Apply to become a worker</b></div>
+<div class="tools"><a class="ib" href="../index.html" aria-label="View website" title="View website"><span data-i="globe"></span></a><a class="ib" href="member-dashboard.html#notifications" aria-label="Notifications"><span data-i="notify"></span><span class="dot"></span></a><button class="ib" id="theme" type="button"></button></div></div>
+<div class="stage">
+<a class="back" href="member-dashboard.html"><span data-i="back"></span>Back to dashboard</a>
+<div class="ph"><div><h1>Apply to Become a Worker</h1><div class="sub">Tell us a little about yourself and where you would like to serve. A pastor from the branch you choose will review your application.</div></div></div>
+<div class="note" style="margin-bottom:14px"><span data-i="clock"></span><span>Demonstration only. This form does not send anything to the church; submitting shows a simulated confirmation.</span></div>
+<div class="fgrid"><div>
+<form class="card" id="af" novalidate aria-labelledby="fT"><h2 id="fT" class="sr" style="position:absolute;left:-9999px">Worker application form</h2>
+<p class="s" style="margin:0 0 14px;color:var(--muted);font-size:13px">Fields marked <span class="req">*</span> are required.</p>
+<fieldset class="grp"><legend>About you</legend><div class="f wide">
+<label><span class="lb">Full name <b class="req" aria-hidden="true">*</b></span><input name="name" required minlength="3" autocomplete="name" value="Grace Adeyemi"></label>
+<div class="cols"><label><span class="lb">Email <b class="req" aria-hidden="true">*</b></span><input name="email" type="email" required autocomplete="email" value="grace.adeyemi@example.org"></label>
+<label><span class="lb">Phone number <b class="req" aria-hidden="true">*</b></span><input name="phone" type="tel" required autocomplete="tel" value="+234 809 555 0150"></label></div></div></fieldset>
+<fieldset class="grp"><legend>Where would you like to serve?</legend><div class="f wide"><div class="cols">
+<label><span class="lb">Preferred branch <b class="req" aria-hidden="true">*</b></span><select name="branch" required><option value="">Choose a branch</option><option>Lagos (HQ)</option><option>Abuja</option><option>Port Harcourt</option><option>Accra</option><option>Kumasi</option><option>London</option></select></label>
+<label><span class="lb">Ministry or department <b class="req" aria-hidden="true">*</b></span><select name="ministry" required><option value="">Choose a ministry</option><option>Choir &amp; Worship</option><option>Ushering</option><option>Media &amp; Technology</option><option>Children's Ministry</option><option>Youth Ministry</option><option>Prayer Team</option><option>Hospitality</option><option>Welfare &amp; Outreach</option></select></label></div></div></fieldset>
+<fieldset class="grp"><legend>Your story</legend><div class="f wide">
+<label><span class="lb">Skills or experience <b class="req" aria-hidden="true">*</b></span><textarea name="skills" rows="3" required minlength="10" placeholder="e.g. I play keyboard and have led a youth choir for 3 years."></textarea></label>
+<label><span class="lb">Why would you like to serve? <b class="req" aria-hidden="true">*</b></span><textarea name="why" rows="4" required minlength="20" placeholder="Share what draws you to this ministry."></textarea></label>
+<label><span class="lb">Additional information <small>(optional)</small></span><textarea name="more" rows="2" placeholder="Availability, languages, anything else we should know."></textarea></label></div></fieldset>
+<div class="acts" style="display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap"><a class="btn" href="member-dashboard.html">Cancel</a><button class="btn p" type="submit">Submit application</button></div></form>
+<div class="card" id="done" hidden tabindex="-1" aria-live="polite"><div class="empty"><div class="big2"><span data-i="check"></span></div><b id="dT">Application ready</b><span id="dS"></span></div><dl class="kv" id="dKv" style="margin-top:6px"></dl>
+<div class="note" style="margin:14px 0"><span data-i="clock"></span><span>This is a demonstration. Your application has <b>not</b> been sent to the church.</span></div>
+<div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end"><button class="btn" type="button" id="again">Start another</button><a class="btn p" href="member-dashboard.html">Back to dashboard</a></div></div>
+</div>
+<aside class="side-c"><div class="card" aria-labelledby="sT"><h2 id="sT">Application status</h2><p class="s">How your application will appear once reviewed.</p>
+<div id="stBox" aria-live="polite"></div>
+<div style="margin-top:14px;font-size:12.5px;color:var(--muted)">Preview a state (demo)</div>
+<div class="seg" id="stSeg" role="group" aria-label="Preview application status" style="margin-top:6px"><button type="button" data-s="pending" class="on" aria-pressed="true">Pending</button><button type="button" data-s="approved" aria-pressed="false">Approved</button><button type="button" data-s="rejected" aria-pressed="false">Rejected</button></div></div></aside></div>
+</div></main></div><script src="assets/app.js"></script><script>
+
+var $ = function (s) { return document.querySelector(s) }, af = $('#af'), E = kpEsc;
+var S = {
+  pending: ['w', 'Pending', 'clock', 'Your application is with the branch pastor. Reviews usually take a few days.', 'done'],
+  approved: ['ok', 'Approved', 'check', 'Welcome to the team! Your branch will contact you about training and your first assignment.', 'ok'],
+  rejected: ['bad', 'Not approved', 'x', 'Not at this time. You are welcome to speak with your branch pastor and apply again later.', 'bad']
+};
+function status(k) {
+  var s = S[k];
+  $('#stBox').innerHTML = '<div class="row" style="border:0;padding-top:0"><span class="chip">' + kpIcon(s[2]) + '</span><div class="t"><b>' + s[1] + '</b><span>' + s[3] + '</span></div></div>' +
+    '<div class="stp"><div class="done">Submitted</div><div class="done">Under review</div><div class="' + (k === 'pending' ? '' : s[4]) + '">' + (k === 'pending' ? 'Decision' : s[1]) + '</div></div>';
+  document.querySelectorAll('#stSeg button').forEach(function (b) { var on = b.dataset.s === k; b.classList.toggle('on', on); b.setAttribute('aria-pressed', on) });
+}
+$('#stSeg').addEventListener('click', function (e) { var b = e.target.closest('button'); if (b) status(b.dataset.s) });
+status('pending');
+af.onsubmit = function (e) {
+  e.preventDefault(); if (!kpValidate(af)) { kpToast('Please fix the highlighted fields', 'err'); return }
+  var v = function (k) { return af.elements[k].value.trim() };
+  $('#dT').textContent = 'Thank you, ' + v('name').split(' ')[0] + '!';
+  $('#dS').textContent = 'Your application is ready to go (simulated).';
+  $('#dKv').innerHTML = [['Branch', v('branch')], ['Ministry', v('ministry')], ['Email', v('email')], ['Phone', v('phone')]].map(function (r) { return '<dt>' + r[0] + '</dt><dd>' + E(r[1]) + '</dd>' }).join('');
+  af.hidden = true; var d = $('#done'); d.hidden = false; d.focus(); status('pending'); window.scrollTo({ top: 0 });
+};
+$('#again').onclick = function () { af.reset(); kpClearErrors(af); af.hidden = false; $('#done').hidden = true; af.elements.branch.focus() };
+
+</script></body></html>

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bible Management · KP Global Admin</title>
+<link rel="icon" href="assets/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+<script>try{var t=localStorage.getItem('kp-theme');if(t)document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+</head><body data-page="bible-management"><div class="app" id="app"><aside class="side" id="side"></aside><div class="scrim" id="scrim"></div>
+<main class="main"><div class="top"><button class="ib ham" id="ham" type="button" aria-label="Open menu"></button><div class="crumb"><a href="dashboard.html">KP Global</a> / <b>Bible Management</b></div>
+<div class="tools"><a class="ib" href="../index.html" aria-label="View website" title="View website"><span data-i="globe"></span></a><a class="ib" href="notifications.html" aria-label="Notifications"><span data-i="notify"></span><span class="dot"></span></a><button class="ib" id="theme" type="button"></button></div></div>
+<div class="stage">
+<div class="ph"><div><h1>Bible Management</h1><div class="sub">Manage the Bible translations (JSON files) that power the KP Global app. Upload new versions, replace existing ones or remove them.</div></div>
+<div class="acts"><button class="btn" type="button" id="refresh"><span data-i="refresh"></span>Refresh</button><button class="btn p" type="button" id="upBtn"><span data-i="upload"></span>Upload Bible JSON</button></div></div>
+<div class="note" style="margin-bottom:14px"><span data-i="clock"></span><span>Demonstration only. Files you pick are checked in your browser and never uploaded; deleting only removes the row from this page.</span></div>
+<div class="stats s3" id="stats" aria-live="polite"></div>
+<div class="toolbar" style="margin-top:14px"><input class="qs" id="q" type="search" placeholder="Search translations…" aria-label="Search Bible translations" style="margin-inline-start:0"></div>
+<div class="card"><div class="scroll"><table class="tbl rt"><thead><tr><th>Bible version</th><th>File name</th><th>File size</th><th>Last updated</th><th>File URL</th><th class="end">Actions</th></tr></thead><tbody id="tb"></tbody></table></div>
+<div class="empty" id="empty" hidden></div></div>
+</div></main></div>
+<dialog id="ud" class="md" data-modal aria-labelledby="udT"><form id="uf" novalidate><div class="dh2"><div><h2 id="udT">Upload Bible JSON</h2><p>Add a new translation. The file is only checked locally.</p></div><button class="ib sm" type="button" data-close aria-label="Close"><span data-i="x"></span></button></div>
+<div class="f wide"><label><span class="lb">Bible version name <b class="req" aria-hidden="true">*</b></span><input name="name" id="uName" required maxlength="12" autocomplete="off" placeholder="e.g. NKJV"><small>Letters, numbers, - or _ · up to 12 characters</small></label>
+<div><label class="drop2" id="uDz"><span data-i="upload"></span><b>Drop a .json file here</b><span>or click to choose a file</span><input type="file" id="uFile" accept=".json,application/json"></label><div class="filechk" id="uOut" hidden role="status"></div></div></div>
+<div class="acts"><button class="btn" type="button" data-close>Cancel</button><button class="btn p" type="submit" id="uGo" disabled>Upload</button></div></form></dialog>
+<dialog id="rd" class="md" data-modal aria-labelledby="rdT"><form id="rf" novalidate><div class="dh2"><div><h2 id="rdT">Replace Bible JSON</h2><p id="rdS"></p></div><button class="ib sm" type="button" data-close aria-label="Close"><span data-i="x"></span></button></div>
+<div class="f wide"><label><span class="lb">Bible version name <b class="req" aria-hidden="true">*</b></span><input name="name" id="rName" required maxlength="12" autocomplete="off"></label>
+<div><label class="drop2" id="rDz"><span data-i="upload"></span><b>Drop a .json file here</b><span>or click to choose a file</span><input type="file" id="rFile" accept=".json,application/json"></label><div class="filechk" id="rOut" hidden role="status"></div></div></div>
+<div class="acts"><button class="btn" type="button" data-close>Cancel</button><button class="btn p" type="submit" id="rGo" disabled>Replace file</button></div></form></dialog>
+<script src="assets/app.js"></script><script>
+
+var BASE = 'https://learnwithalison.com/uploads/';
+var raw = [['AKJV', 4838516, '12 Oct 2026'], ['AMP', 5495703, '12 Oct 2026'], ['ASV', 4602115, '09 Oct 2026'], ['CSB', 4977320, '02 Oct 2026'], ['ESV', 4744908, '02 Oct 2026'], ['KJV', 4632774, '28 Sep 2026'], ['MSG', 5310442, '28 Sep 2026'], ['NASB', 4893061, '21 Sep 2026'], ['NIV', 4981230, '21 Sep 2026'], ['NKJV', 4905777, '14 Sep 2026'], ['NLT', 5102689, '14 Sep 2026'], ['WEB', 4711350, '07 Sep 2026'], ['YLT', 4566018, '07 Sep 2026']];
+var D = raw.map(function (r) { return { name: r[0], file: r[0] + '_bible.json', bytes: r[1], date: r[2], url: BASE + r[0] + '_bible.json' } });
+var $ = function (s) { return document.querySelector(s) }, E = kpEsc, loading = true, rec = null;
+var today = function () { return new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }) };
+
+function stats() {
+  var tot = D.reduce(function (a, x) { return a + x.bytes }, 0), big = D.slice().sort(function (a, b) { return b.bytes - a.bytes })[0];
+  var c = [['Total Bible versions', loading ? '…' : D.length, 'translations available in the app', 'bible'], ['Total storage used', loading ? '…' : kpBytes(tot), 'across all JSON files', 'file'], ['Largest version', loading ? '…' : !big ? '—' : big.name, big ? kpBytes(big.bytes) : 'no files yet', 'upload']];
+  $('#stats').innerHTML = c.map(function (x) { return '<div class="card st"><div class="h"><span class="chip">' + kpIcon(x[3]) + '</span>' + x[0] + '</div><div class="n">' + x[1] + '</div><div class="d">' + x[2] + '</div></div>' }).join('');
+}
+function render() {
+  stats(); var tb = $('#tb'), em = $('#empty'), q = $('#q').value.trim().toLowerCase();
+  if (loading) { tb.innerHTML = [1, 2, 3, 4].map(function () { return '<tr>' + '<td><div class="skel" style="width:70px"></div></td>'.repeat(5) + '<td></td></tr>' }).join(''); em.hidden = true; return }
+  var rows = D.filter(function (x) { return !q || (x.name + ' ' + x.file).toLowerCase().indexOf(q) > -1 });
+  tb.innerHTML = rows.map(function (x) {
+    return '<tr><td class="pri"><div class="who"><div class="av c' + (x.name.length % 4) + '" aria-hidden="true">' + E(x.name.slice(0, 2)) + '</div><b>' + E(x.name) + '</b></div></td>' +
+      '<td data-l="File name"><span class="mono">' + E(x.file) + '</span></td><td data-l="File size">' + kpBytes(x.bytes) + '</td><td data-l="Updated">' + E(x.date) + '</td>' +
+      '<td data-l="File URL">' + (x.url ? '<a class="url lnk" href="' + E(x.url) + '" target="_blank" rel="noopener" title="' + E(x.url) + '">' + E(x.url) + '</a>' : '<span class="tag mute">Local demo file</span>') + '</td>' +
+      '<td class="end">' + (x.url ? '<a class="ib sm" href="' + E(x.url) + '" target="_blank" rel="noopener" aria-label="Open ' + E(x.name) + ' file in a new tab" title="Open file">' + kpIcon('eye') + '</a><button class="ib sm" type="button" data-a="copy" data-n="' + E(x.name) + '" aria-label="Copy ' + E(x.name) + ' file URL" title="Copy URL">' + kpIcon('copy') + '</button>' : '') +
+      '<button class="ib sm" type="button" data-a="replace" data-n="' + E(x.name) + '" aria-label="Replace ' + E(x.name) + ' file" title="Edit / replace">' + kpIcon('edit') + '</button>' +
+      '<button class="ib sm" type="button" data-a="del" data-n="' + E(x.name) + '" aria-label="Delete ' + E(x.name) + '" title="Delete">' + kpIcon('trash') + '</button></td></tr>';
+  }).join('');
+  document.querySelector('.tbl').hidden = !rows.length;
+  em.hidden = rows.length > 0;
+  em.innerHTML = D.length ? '<div class="big2"><span>' + kpIcon('search') + '</span></div><b>No translations match “' + E($('#q').value) + '”</b>Try a different name.' : '<div class="big2"><span>' + kpIcon('bible') + '</span></div><b>No Bible translations yet</b>Upload a JSON file to add the first one.<div style="margin-top:12px"><button class="btn p" type="button" id="emptyUp">Upload Bible JSON</button></div>';
+  var eu = $('#emptyUp'); if (eu) eu.onclick = openUpload;
+}
+function load(ms) { loading = true; render(); setTimeout(function () { loading = false; render() }, ms) }
+
+/* local JSON picker: validates by reading + JSON.parse in the browser; nothing is uploaded */
+function Picker(p, onChange) {
+  var dz = $('#' + p + 'Dz'), inp = $('#' + p + 'File'), out = $('#' + p + 'Out'), st = { file: null, ok: false };
+  function show(cls, title, sub) { out.hidden = false; out.className = 'filechk ' + cls; out.innerHTML = '<span class="chip" style="width:28px;height:28px">' + kpIcon(cls === 'ok' ? 'check' : cls === 'bad' ? 'x' : 'clock') + '</span><div><b>' + E(title) + '</b><span>' + E(sub) + '</span></div>' }
+  function handle(f) {
+    st.file = f; st.ok = false; onChange(st); if (!f) return;
+    if (!/\.json$/i.test(f.name)) { show('bad', f.name, 'This is not a .json file. Please choose a Bible JSON file.'); return }
+    if (f.size > 50 * 1048576) { show('bad', f.name, 'File is larger than 50 MB (' + kpBytes(f.size) + ').'); return }
+    if (!f.size) { show('bad', f.name, 'The file is empty.'); return }
+    show('', f.name, kpBytes(f.size) + ' · checking JSON…');
+    f.text().then(function (t) {
+      try { var j = JSON.parse(t); if (j === null || typeof j !== 'object') throw new Error('Top level must be an object or array.');
+        st.ok = true; show('ok', f.name, kpBytes(f.size) + ' · valid JSON (' + (Array.isArray(j) ? j.length + ' items' : Object.keys(j).length + ' top-level entries') + ')'); }
+      catch (e) { st.ok = false; show('bad', f.name, 'Invalid JSON: ' + e.message) }
+      onChange(st);
+    }, function () { show('bad', f.name, 'Could not read this file.'); onChange(st) });
+  }
+  inp.onchange = function () { handle(inp.files[0]) };
+  ['dragenter', 'dragover'].forEach(function (n) { dz.addEventListener(n, function (e) { e.preventDefault(); dz.classList.add('over') }) });
+  ['dragleave', 'drop'].forEach(function (n) { dz.addEventListener(n, function (e) { e.preventDefault(); dz.classList.remove('over') }) });
+  dz.addEventListener('drop', function (e) { var f = e.dataTransfer.files[0]; if (f) { try { inp.files = e.dataTransfer.files } catch (x) { } handle(f) } });
+  st.reset = function () { inp.value = ''; st.file = null; st.ok = false; out.hidden = true; out.innerHTML = '' };
+  return st;
+}
+function nameErr(input, v, except) {
+  var er = input.closest('label').querySelector('.err'), m = '';
+  if (!v) m = 'Please enter a version name.'; else if (!/^[A-Za-z0-9_-]{1,12}$/.test(v)) m = 'Use letters, numbers, - or _ only (up to 12 characters).';
+  else if (D.some(function (x) { return x.name.toLowerCase() === v.toLowerCase() && x !== except })) m = v.toUpperCase() + ' already exists. Use the edit/replace action on its row instead.';
+  if (!er) { er = document.createElement('small'); er.className = 'err'; er.id = 'e-' + input.id; input.closest('label').appendChild(er) }
+  er.textContent = m; er.hidden = !m; if (m) { input.setAttribute('aria-invalid', 'true'); input.setAttribute('aria-describedby', er.id) } else { input.removeAttribute('aria-invalid'); input.removeAttribute('aria-describedby') }
+  return !m;
+}
+var ud = $('#ud'), uf = $('#uf'), rd = $('#rd'), rf = $('#rf');
+var auto = '';
+var up = Picker('u', function (s) { $('#uGo').disabled = !s.ok; var n = $('#uName'); if (s.ok && (!n.value.trim() || n.value === auto)) { auto = s.file.name.replace(/(_bible)?\.json$/i, '').replace(/[^A-Za-z0-9_-]/g, '').toUpperCase().slice(0, 12); n.value = auto } });
+var rp = Picker('r', function (s) { $('#rGo').disabled = !s.ok });
+function openUpload() { auto = ''; uf.reset(); up.reset(); $('#uGo').disabled = true; nameErr($('#uName'), 'x'); ud.showModal(); $('#uName').focus() }
+$('#upBtn').onclick = openUpload;
+uf.onsubmit = function (e) {
+  e.preventDefault(); var v = $('#uName').value.trim();
+  if (!nameErr($('#uName'), v)) { $('#uName').focus(); return }
+  if (!up.ok) { kpToast('Choose a valid JSON file first', 'err'); return }
+  var b = $('#uGo'); b.disabled = true; b.innerHTML = '<span class="spin"></span> Uploading (simulated)…';
+  setTimeout(function () {
+    D.unshift({ name: v.toUpperCase(), file: v.toUpperCase() + '_bible.json', bytes: up.file.size, date: today(), url: null });
+    b.textContent = 'Upload'; ud.close(); render(); kpToast(v.toUpperCase() + ' added to the table (demo, nothing uploaded)');
+  }, 1200);
+};
+$('#uName').addEventListener('input', function () { if (this.getAttribute('aria-invalid')) nameErr(this, this.value.trim()) });
+$('#tb').addEventListener('click', function (e) {
+  var a = e.target.closest('[data-a]'); if (!a) return; var x = D.filter(function (d) { return d.name === a.dataset.n })[0]; if (!x) return;
+  if (a.dataset.a === 'copy') { (navigator.clipboard ? navigator.clipboard.writeText(x.url) : Promise.reject()).then(function () { kpToast('URL copied') }, function () { kpToast('Could not copy. Select the link and copy it manually.', 'err') }) }
+  else if (a.dataset.a === 'replace') { rec = x; rf.reset(); rp.reset(); $('#rGo').disabled = true; $('#rName').value = x.name; nameErr($('#rName'), x.name, x); $('#rdS').textContent = 'Choose a new JSON file for ' + x.name + ' (currently ' + kpBytes(x.bytes) + '). You can also rename the version.'; rd.showModal(); $('#rName').focus() }
+  else kpConfirm({ title: 'Delete ' + x.name + '?', msg: 'Removes this translation from the table on this page only (demo). No real file is deleted.', yes: 'Delete', danger: true }, function () { D = D.filter(function (d) { return d !== x }); render(); kpToast(x.name + ' removed (demo)') });
+});
+rf.onsubmit = function (e) {
+  e.preventDefault(); var v = $('#rName').value.trim();
+  if (!nameErr($('#rName'), v, rec)) { $('#rName').focus(); return }
+  if (!rp.ok) { kpToast('Choose a valid replacement JSON file first', 'err'); return }
+  var x = rec; rd.close();
+  kpConfirm({ title: 'Replace ' + x.name + '?', msg: 'The row will show the new name, size and date. This is a demo: nothing is uploaded and the old server file is untouched.', yes: 'Replace' }, function () {
+    x.name = v.toUpperCase(); x.file = x.name + '_bible.json'; x.bytes = rp.file.size; x.date = today(); x.url = null; render(); kpToast(x.name + ' updated (demo)');
+  });
+};
+$('#rName').addEventListener('input', function () { if (this.getAttribute('aria-invalid')) nameErr(this, this.value.trim(), rec) });
+$('#q').oninput = render;
+$('#refresh').onclick = function () { load(700); kpToast('Refreshed sample data') };
+load(800);
+
+</script></body></html>

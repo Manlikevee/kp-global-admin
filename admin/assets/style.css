@@ -61,7 +61,7 @@ a { color: inherit }
 h3 { margin: 0; font-size: 15px }
 
 /* ---------- shell ---------- */
-.app { display: grid; grid-template-columns: 288px 1fr; min-height: 100vh; transition: grid-template-columns .2s }
+.app { display: grid; grid-template-columns: 288px 1fr; min-height: 100vh; transition: grid-template-columns .2s; overflow-x: clip }
 .app.mini { grid-template-columns: 84px 1fr }
 .side { padding: 14px; position: sticky; top: 0; height: 100vh }
 .sb { background: var(--panel); border: 1px solid var(--line); border-radius: var(--r); height: 100%; display: flex; flex-direction: column; overflow: hidden }
@@ -72,7 +72,7 @@ img.logo { width: 38px; height: 38px; border-radius: 50%; flex: none; display: b
 .search { margin: 14px 14px 6px; display: flex; align-items: center; gap: 8px; border: 1px solid var(--line); border-radius: 14px; padding: 0 8px 0 12px; height: 44px; color: var(--muted) }
 .search input { flex: 1; min-width: 0; border: 0; background: none; outline: 0 }
 kbd { border: 1px solid var(--line); background: var(--soft); border-radius: 8px; padding: 2px 9px; font: inherit; font-size: 13px }
-nav { flex: 1; overflow: auto; padding: 6px 14px 14px }
+nav { flex: 1; overflow-y: auto; overflow-x: hidden; padding: 6px 14px 14px }
 .grp { font-size: 12px; color: var(--muted); padding: 16px 12px 6px; font-weight: 600 }
 .nav { display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-radius: 12px; color: var(--muted); font-weight: 500; text-decoration: none; font-size: 14px; position: relative }
 .nav:hover { background: var(--soft); color: var(--text) }
@@ -92,9 +92,9 @@ nav { flex: 1; overflow: auto; padding: 6px 14px 14px }
 .foot span { font-size: 12px; color: var(--muted) }
 .out { margin-inline-start: auto; color: var(--muted); display: grid; place-items: center; width: 36px; height: 36px; border-radius: 10px }
 .out:hover { background: var(--soft); color: var(--text) }
-.mini .brand>span, .mini .search, .mini .grp, .mini .nav span, .mini .nav .b, .mini .foot div, .mini .out { display: none }
-.mini .brand { justify-content: center; padding: 16px 0 }
-.mini .sq { display: none }
+.mini .brand>span, .mini .search, .mini .grp, .mini .nav span, .mini .nav .b, .mini .foot div, .mini .out, .mini .demo { display: none }
+.mini .brand { flex-direction: column; justify-content: center; gap: 10px; padding: 14px 0 }
+.mini .sq { margin: 0 }
 .mini .nav { justify-content: center; padding: 12px 0 }
 .mini .foot { justify-content: center }
 .main { padding: 20px 22px 40px 6px; min-width: 0 }
@@ -103,7 +103,7 @@ nav { flex: 1; overflow: auto; padding: 6px 14px 14px }
 .crumb a { text-decoration: none }
 .crumb a:hover { color: var(--text) }
 .crumb b { color: var(--text); font-weight: 600 }
-.ib.ham { display: none }
+.ib.ham { display: grid }
 .tools { margin-inline-start: auto; display: flex; gap: 8px }
 .ib { width: 42px; height: 42px; border: 1px solid var(--line); background: var(--panel); border-radius: 12px; display: grid; place-items: center; position: relative; text-decoration: none }
 .ib.sm { display: inline-grid; margin-inline-start: 4px; vertical-align: middle; width: 32px; height: 32px; border-radius: 9px; color: var(--muted) }
@@ -392,11 +392,14 @@ button.btn { font: inherit; font-size: 13px; font-weight: 600 }
   .side { position: fixed; inset: 0 auto 0 0; width: 288px; max-width: 86vw; z-index: 30; transform: translateX(-105%); transition: transform .2s }
   .app.open .side { transform: none }
   .app.open .scrim { display: block; position: fixed; inset: 0; background: rgba(0, 0, 0, .45); z-index: 20 }
-  .app.mini .brand>span, .app.mini .search, .app.mini .grp, .app.mini .nav span, .app.mini .nav .b, .app.mini .foot div, .app.mini .out { display: revert }
+  .app.mini .brand>span, .app.mini .search, .app.mini .grp, .app.mini .nav span, .app.mini .nav .b, .app.mini .foot div, .app.mini .out, .app.mini .demo { display: revert }
+  .app.mini .brand { flex-direction: row; justify-content: flex-start; gap: 10px; padding: 16px }
+  .app.mini .nav { justify-content: flex-start; padding: 10px 12px }
+  .app.mini .foot { justify-content: flex-start }
+  .app.mini .sq { margin-inline-start: auto }
   .main { padding: 14px }
   .ib.ham { display: grid }
   .stage { padding: 18px; border-radius: 22px }
-  .sq { display: none }
   .login { grid-template-columns: 1fr }
   .hero { display: none }
   .set { grid-template-columns: 1fr }
@@ -421,3 +424,107 @@ button.btn { font: inherit; font-size: 13px; font-weight: 600 }
 /* form control polish */
 .f input, .f select, .f textarea { font-weight: 400 }
 input[type=checkbox], input[type=radio] { accent-color: var(--brand) }
+
+
+/* ===== frontend demo additions: roles, modals, validation, responsive tables ===== */
+html { scroll-behavior: smooth }
+[id] { scroll-margin-top: 16px }
+.demo { border-top: 1px solid var(--line); padding: 10px 14px; display: grid; gap: 4px; font-size: 12px; color: var(--muted) }
+.demo select { height: 36px; border: 1px solid var(--line); border-radius: 10px; background: var(--panel); padding: 0 8px }
+select.fs, input.qs { height: 42px; border: 1px solid var(--line); border-radius: 12px; background: var(--panel); padding: 0 12px; min-width: 0; font-weight: 400 }
+input.qs { width: 240px }
+select.fs:focus, input.qs:focus, .demo select:focus { outline: 2px solid var(--brand); outline-offset: 0; border-color: var(--brand) }
+.toolbar .qs { margin-inline-start: auto }
+.req { color: var(--bad) }
+.err { color: var(--bad); font-weight: 500; font-size: 12.5px }
+.f [aria-invalid=true] { border-color: var(--bad) }
+.btn.dg { background: var(--bad); color: #fff; border-color: var(--bad) }
+.btn.dg:hover { background: var(--bad); filter: brightness(.95) }
+.btn[disabled], .ib[disabled] { opacity: .45; cursor: not-allowed }
+.toast.err { border-inline-start-color: var(--bad) }
+dialog { max-height: 90vh; overflow: auto }
+dialog.md { max-width: 560px }
+dialog.lg { max-width: 700px }
+dialog .dh2 { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; margin-bottom: 14px }
+dialog .dh2 h2 { margin: 0 }
+dialog .dh2 p { margin: 2px 0 0 }
+dialog .f { max-width: none }
+dialog .acts { margin-top: 18px }
+dialog form .acts { margin-top: 6px }
+.note { background: var(--brand-soft); border: 1px solid var(--brand); border-radius: 10px; padding: 8px 12px; font-size: 12.5px; color: var(--text); display: flex; gap: 8px; align-items: flex-start }
+.tag.mute { color: var(--muted) }
+.skel { height: 14px; border-radius: 6px; background: linear-gradient(90deg, var(--soft), var(--line), var(--soft)); background-size: 200% 100%; animation: sk 1.2s linear infinite }
+@keyframes sk { to { background-position: -200% 0 } }
+.url { max-width: 220px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; display: inline-block; vertical-align: middle; color: var(--muted); font-size: 12.5px }
+.mono { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 13px }
+.empty .big2 { width: 54px; height: 54px; border-radius: 16px; background: var(--brand-soft); color: var(--brand-deep); display: grid; place-items: center; margin: 0 auto 10px }
+.empty b { display: block; color: var(--text); font-size: 15px; margin-bottom: 2px }
+.sec { margin-top: 16px }
+.sec > .bar h2 { font-size: 17px }
+.lgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px }
+.lgrid .media .thumb { margin-bottom: 10px }
+.welcome { border-radius: 18px; padding: 26px 28px; color: #fff; display: flex; gap: 18px; align-items: center; flex-wrap: wrap; margin-bottom: 16px; background: radial-gradient(ellipse at 92% 130%, rgba(240, 89, 43, .55), transparent 55%), radial-gradient(ellipse at 8% 140%, rgba(240, 152, 38, .4), transparent 50%), #0d0a07 }
+.welcome h1 { font-size: 26px }
+.welcome p { margin: 4px 0 0; opacity: .78; font-size: 14.5px }
+.welcome .acts { margin-inline-start: auto; display: flex; gap: 8px; flex-wrap: wrap }
+.welcome .btn { background: rgba(255, 255, 255, .12); color: #fff; border-color: rgba(255, 255, 255, .28) }
+.welcome .btn:hover { background: rgba(255, 255, 255, .2) }
+.welcome .btn.p { background: var(--brand); color: var(--brand-ink); border-color: var(--brand) }
+.welcome .pill { display: inline-flex; align-items: center; gap: 6px; background: rgba(255, 255, 255, .12); border-radius: 99px; padding: 3px 12px; font-size: 12.5px; margin-bottom: 8px }
+.welcome .pill svg { width: 14px; height: 14px }
+.apply-cta { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; border: 1.5px solid var(--brand); background: linear-gradient(120deg, var(--brand-soft), transparent 70%), var(--panel); border-radius: var(--r); padding: 18px 20px }
+.apply-cta .chip { width: 46px; height: 46px; border-radius: 14px }
+.apply-cta h2 { margin: 0; font-size: 17px }
+.apply-cta p { margin: 2px 0 0; color: var(--muted); font-size: 13.5px }
+.apply-cta .btn { margin-inline-start: auto }
+.unread { border-inline-start: 3px solid var(--brand); padding-inline-start: 10px }
+.qa { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px }
+.qa a { display: flex; flex-direction: column; gap: 8px; align-items: flex-start; padding: 14px; border: 1px solid var(--line); border-radius: 12px; text-decoration: none; font-weight: 600; font-size: 13.5px; background: var(--panel) }
+.qa a:hover { border-color: var(--brand) }
+.qa a .chip { width: 32px; height: 32px }
+.devo { border-inline-start: 4px solid var(--brand) }
+.devo h3 { font-size: 17px; margin-bottom: 4px }
+.stp { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 14px 0 4px }
+.stp div { border-top: 3px solid var(--line); padding-top: 6px; font-size: 12.5px; color: var(--muted) }
+.stp div.done { border-color: var(--brand); color: var(--text) }
+.stp div.bad { border-color: var(--bad); color: var(--text) }
+.stp div.ok { border-color: var(--ok); color: var(--text) }
+.drop2 { border: 1.5px dashed var(--line); border-radius: 12px; padding: 24px; text-align: center; color: var(--muted); font-size: 13.5px; display: grid; gap: 6px; justify-items: center; cursor: pointer }
+.drop2:hover, .drop2.over { border-color: var(--brand); background: var(--brand-soft); color: var(--text) }
+.drop2 svg { color: var(--brand-deep); width: 28px; height: 28px }
+.drop2 input { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none }
+.drop2:focus-within { outline: 2px solid var(--brand); outline-offset: 2px }
+.filechk { display: flex; gap: 10px; align-items: flex-start; border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; font-size: 13.5px; background: var(--soft) }
+.filechk.ok { border-color: var(--ok) }
+.filechk.bad { border-color: var(--bad) }
+.filechk b { display: block }
+.filechk span { color: var(--muted); font-size: 12.5px }
+.spin { width: 16px; height: 16px; border-radius: 50%; border: 2px solid currentColor; border-top-color: transparent; animation: spin .7s linear infinite; display: inline-block }
+@keyframes spin { to { transform: rotate(360deg) } }
+@media(max-width:700px) {
+  .tbl.rt { min-width: 0 }
+  .tbl.rt thead { display: none }
+  .tbl.rt, .tbl.rt tbody, .tbl.rt tr, .tbl.rt td { display: block }
+  .tbl.rt tr { border: 1px solid var(--line); border-radius: 12px; margin: 10px 0; padding: 6px 12px }
+  .tbl.rt td { border: 0; padding: 6px 0; display: flex; justify-content: space-between; align-items: center; gap: 12px; text-align: end; font-weight: 500 }
+  .tbl.rt td[data-l]::before { content: attr(data-l); color: var(--muted); font-weight: 600; font-size: 12.5px; text-align: start; flex: none }
+  .tbl.rt td.pri { justify-content: flex-start; text-align: start; font-weight: 600 }
+  .tbl.rt td.end { justify-content: flex-end; border-top: 1px solid var(--line); margin-top: 4px; padding-top: 8px }
+  .tbl.rt .url { max-width: 160px }
+  input.qs { width: 100% }
+  .toolbar .qs { margin-inline-start: 0 }
+  .toolbar select.fs { flex: 1 }
+  .welcome { padding: 20px }
+  .welcome .acts { margin-inline-start: 0 }
+  .apply-cta .btn { margin-inline-start: 0 }
+}
+.f label small.err { color: var(--bad); font-weight: 500 }
+.f .lb { display: block }
+.f label.row-c { display: flex; align-items: center; gap: 8px; font-weight: 500 }
+.sb nav { scrollbar-width: thin }
+
+fieldset.grp { border: 0; padding: 0; margin: 0 0 22px }
+fieldset.grp legend { font-weight: 700; font-size: 15px; padding: 0; margin-bottom: 10px }
+
+fieldset.grp { border: 0; padding: 0; margin: 0 0 22px }
+fieldset.grp legend { font-weight: 700; font-size: 15px; padding: 0; margin-bottom: 10px }
